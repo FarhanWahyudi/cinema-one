@@ -4,6 +4,7 @@ import supabase from "@/config/supabase-config"
 import { IUser } from "@/interfaces"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken" 
+import { cookies } from "next/headers"
 import { success } from "zod"
 
 export const registerUser = async (payload: Partial<IUser>) => {
@@ -93,5 +94,41 @@ export const loginUser = async (payload: Partial<IUser>) => {
         success: true,
         message: 'user logged in successfully',
         data: jwtToken
+    }
+}
+
+export const getLoggedInUser = async () => {
+    try {
+        const cookesStore = await cookies();
+        const jwtToken = cookesStore.get('jwt_token')?.value;
+        const decodedData: any = jwt.verify(
+            jwtToken || '',
+            process.env.JWT_SECRET!
+        );
+        const userId = decodedData.userId;
+
+        const { data: users, error } = await supabase.from('user_profiles').select("*").eq('id', userId)
+
+        if (users?.length === 0 || error) {
+            return {
+                success: false,
+                message: "user not found"
+            }
+        }
+
+        const user = users[0];
+        delete user.password;
+        return {
+            success: true,
+            message: 'user data fetched successfully',
+            data: user
+        }
+
+        
+    } catch (error) {
+        return {
+            success: false,
+            message: "error fetching user data"
+        }
     }
 }
