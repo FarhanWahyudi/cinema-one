@@ -85,15 +85,15 @@ export default function RegisterForm() {
                     />
                     <div className="flex justify-between">
                         <div className="flex gap-2 items-center">
-                            <h1 className="text-sm text-primary font-semibold">
+                            <h1 className="text-sm text-gray-600 font-semibold">
                                 Already have an account ?
                             </h1>
-                            <Link href={"/login"} className="text-sm text-primary underline">
+                            <Link href={"/?form=login"} className="text-sm text-primary underline font-medium">
                                 Login
                             </Link>
                         </div>
                     </div>
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit">Register</Button>
                 </form>
             </Form>
         </div>
