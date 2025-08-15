@@ -19,14 +19,21 @@ import {
 } from "@/components/ui/radio-group"
 import { Input } from "@/components/ui/input"
 import Link from "next/link";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { loginUser } from "@/actions/users";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
-const loginFormSchema = z.object({
+const loginFormSchema: any = z.object({
     email: z.string().email(),
     password: z.string().min(6),
-    role: z.string().default('user').optional(),
+    role: z.string()
 })
 
 export default function LoginForm() {
+    const [ loading, setLoading ] = useState(false)
+    const router = useRouter();
     const form = useForm<z.infer<typeof loginFormSchema>>({
         resolver: zodResolver(loginFormSchema),
         defaultValues: {
@@ -36,8 +43,23 @@ export default function LoginForm() {
         }
     });
 
-    function onSubmit(values: z.infer<typeof loginFormSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+        try {
+            setLoading(true)
+            const response = await loginUser(values);
+            if (!response.success) {
+                throw new Error(response.message)
+            }
+            toast.success(response.message)
+            Cookies.set("jwt_token", response.data!);
+            Cookies.set("user_role", values.role);
+            form.reset();
+            router.push(`/${values.role}/dashboard`)
+        } catch (error: any) {
+            toast.error(error.message)
+        } finally {
+            setLoading(false)
+        }
     }
     
     return (
@@ -118,7 +140,7 @@ export default function LoginForm() {
                             </Link>
                         </div>
                     </div>
-                    <Button type="submit">Login</Button>
+                    <Button type="submit" disabled={loading}>Login</Button>
                 </form>
             </Form>
         </div>
