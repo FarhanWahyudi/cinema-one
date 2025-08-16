@@ -31,3 +31,20 @@ export interface ITheatre {
     created_at: string,
     updated_at: string,
 }
+
+export interface IShow {
+    id: string,
+    movie_id: string,
+    theatre_id: string,
+    date: string,
+    time: string,
+    ticket_price: number,
+    booked_seats: number[],
+    available_seats_count: number,
+    is_active: boolean,
+    created_at: string,
+    updated_at: string,
+
+    movie?: IMovie,
+    theatre?: ITheatre
+}
