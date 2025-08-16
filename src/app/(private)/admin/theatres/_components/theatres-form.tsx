@@ -68,6 +68,7 @@ export default function TheatreForm({ openTheatreForm, setOpenTheatreForm, reloa
             }
 
             toast.success(response.message || 'Movie added successfully')
+            reloadData();
             form.reset();
             setOpenTheatreForm(false)
         } catch (error: any) {
