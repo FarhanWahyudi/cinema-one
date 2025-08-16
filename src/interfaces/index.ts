@@ -8,3 +8,15 @@ export interface IUser {
     updated_at: string,
     is_active: boolean,
 }
+
+export interface IMovie {
+    id: string,
+    name: string,
+    description: string,
+    release_date: string,
+    genre: string[],
+    poster_url: string,
+    is_active: boolean,
+    created_at: string,
+    updated_at: string,
+}
