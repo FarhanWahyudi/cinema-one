@@ -62,8 +62,8 @@ export default function SidebarMenuItems({
             icon: <Clapperboard size={iconSize} />
         },
         {
-            name: 'Theaters',
-            path: '/admin/theaters',
+            name: 'Theatres',
+            path: '/admin/theatres',
             icon: <ListCheck size={iconSize} />
         },
         {

@@ -25,7 +25,7 @@ export interface IMovie {
 export interface ITheatre {
     id: string,
     name: string,
-    location: string,
+    address: string,
     capacity: number,
     is_active: boolean,
     created_at: string,
