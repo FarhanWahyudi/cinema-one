@@ -12,7 +12,7 @@ import {
 import { IUserStore, useUsersStore } from "@/store/users-store";
 import { IUser } from "@/interfaces";
 import { Clapperboard, Clipboard, LayoutDashboard, ListCheck, Play, PlayCircle, SquareDashed, UserCheck, UserRoundPen } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LogoutButton from "@/components/functional/logout-btn";
 
 export default function SidebarMenuItems({
@@ -24,6 +24,7 @@ export default function SidebarMenuItems({
 }) {
     const { user } = useUsersStore() as IUserStore;
     const pathname = usePathname();
+    const router = useRouter();
 
     const iconSize = 14
 
@@ -98,7 +99,12 @@ export default function SidebarMenuItems({
                                     pathname === item.path
                                         ? 'bg-gray-100 border border-primary rounded text-primary'
                                         : ''
-                                }`}>
+                                    }`}
+                                    onClick={() => {
+                                        setOpenSidebar(false);
+                                        router.push(item.path);
+                                    }}
+                                >
                                     {item.icon}
                                     <h1 className="text-sm">{item.name}</h1>
                                 </div>
