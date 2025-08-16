@@ -28,10 +28,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { movieGenres } from "@/constants";
 import { uploadFileAndGetUrl } from "@/helpers/file-uploads";
 import { addMovie, updateMovie } from "@/actions/movies";
+import { IMovie } from "@/interfaces";
 
 
 interface MovieFormProps {
     formType: 'add' | 'edit';
+    initialValues?: Partial<IMovie>
 }
 
 const movieFormSchema: any = z.object({
@@ -43,19 +45,19 @@ const movieFormSchema: any = z.object({
   poster_url: z.string().min(1, 'Poster URL is required'),
 })
 
-export default function MovieForm({ formType }: MovieFormProps) {
+export default function MovieForm({ formType, initialValues }: MovieFormProps) {
   const [ selectedPosterFile, setSelectedPosterFile ] = useState<File | null>(null)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter();
   const form = useForm<z.infer<typeof movieFormSchema>>({
     resolver: zodResolver(movieFormSchema),
     defaultValues: {
-        name: "",
-        description: "",
-        release_date: "",
-        genre: "",
-        duration: "",
-        poster_url: "",
+        name: initialValues?.name || "",
+        description: initialValues?.description || "",
+        release_date: initialValues?.release_date || "",
+        genre: initialValues?.genre || "",
+        duration: initialValues?.duration || "",
+        poster_url: initialValues?.poster_url || "",
     }
   });
 
@@ -76,6 +78,8 @@ export default function MovieForm({ formType }: MovieFormProps) {
 
       if (formType === 'add') {
         response = await addMovie(payload);
+      } else if (formType === 'edit') {
+        response = await updateMovie(initialValues?.id || '', payload)
       }
 
       if (!response?.success) {
@@ -188,10 +192,12 @@ export default function MovieForm({ formType }: MovieFormProps) {
               }}
             />
           </div>
-          {selectedPosterFile && (
+          {(selectedPosterFile || form.getValues().poster_url ) && (
             <div className="mt-3">
               <img
-                src={URL.createObjectURL(selectedPosterFile)}
+                src={selectedPosterFile
+                  ? URL.createObjectURL(selectedPosterFile!)
+                  : form.getValues().poster_url}
                 alt="Selected poster"
                 className="w-32 h-32 object-contain rounded-md shadow-md"
               />

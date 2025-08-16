@@ -1,12 +1,24 @@
 import React from 'react'
 import MovieForm from '../../_components/movie-form'
 import PageTitle from '@/components/ui/page-title'
+import { getMovieById } from '@/actions/movies';
 
-export default function EditMoviePage() {
+interface EditMoviePageProps {
+  params : Promise<{ id: string }>
+}
+
+export default async function EditMoviePage({ params }: EditMoviePageProps) {
+  const { id } = await params;
+  const movieResponse = await getMovieById(id);
+  if (!movieResponse.success) {
+    return <h1>{movieResponse.message}</h1>
+  }
+
+  const movie = movieResponse.data;
   return (
     <div>
         <PageTitle title='Add Movie' />
-        <MovieForm formType='add' />
+        <MovieForm formType='add' initialValues={movie} />
     </div>
   )
 }

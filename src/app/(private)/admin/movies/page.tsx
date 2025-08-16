@@ -18,11 +18,13 @@ import toast from 'react-hot-toast'
 import { getAllMovies } from '@/actions/movies'
 import { Edit2, Trash2 } from 'lucide-react'
 import Spinner from '@/components/functional/spinner'
+import { useRouter } from 'next/navigation'
 
 
 export default function AdminMoviesPage() {
   const [ movies, setMovies ] = useState<IMovie[]>([])
   const [ loading, setLoading ] = useState<boolean>(true);
+  const router = useRouter();
 
   const fetchMovies = async () => {
     try {
@@ -89,7 +91,7 @@ export default function AdminMoviesPage() {
                   <TableCell>{movie.duration}</TableCell>
                   <TableCell>
                     <div className='flex gap-2 items-center'>
-                      <Button variant={"secondary"} size={'icon'}>
+                      <Button onClick={() => router.push(`/admin/movies/edit/${movie.id}`)} variant={"secondary"} size={'icon'}>
                         <Edit2 size={15} />
                       </Button>
                       <Button variant={"secondary"} size={'icon'}>
