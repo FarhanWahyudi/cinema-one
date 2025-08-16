@@ -17,6 +17,7 @@ import { IMovie } from '@/interfaces'
 import toast from 'react-hot-toast'
 import { getAllMovies } from '@/actions/movies'
 import { Edit2, Trash2 } from 'lucide-react'
+import Spinner from '@/components/functional/spinner'
 
 
 export default function AdminMoviesPage() {
@@ -61,7 +62,7 @@ export default function AdminMoviesPage() {
             </Button>
         </div>
 
-        {loading && <h1>Loading...</h1>}
+        {loading && <Spinner />}
 
         {!loading && movies.length === 0 && (
           <h1 className='text-center text-lg'>No Movie Found</h1>
