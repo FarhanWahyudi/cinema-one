@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table"
 import { IMovie } from '@/interfaces'
 import toast from 'react-hot-toast'
-import { getAllMovies } from '@/actions/movies'
+import { deleteMovie, getAllMovies } from '@/actions/movies'
 import { Edit2, Trash2 } from 'lucide-react'
 import Spinner from '@/components/functional/spinner'
 import { useRouter } from 'next/navigation'
@@ -44,6 +44,22 @@ export default function AdminMoviesPage() {
   useEffect(() => {
     fetchMovies();
   }, [])
+
+  const handleDelete = async (movieId: string) => {
+    try {
+      setLoading(true)
+      const response = await deleteMovie(movieId)
+      if (!response.success) {
+        throw new Error(response.message)
+      }
+      toast.success(response.message)
+      fetchMovies()
+    } catch (error: any) {
+      toast.error(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const columns = [
     'Name',
@@ -94,7 +110,7 @@ export default function AdminMoviesPage() {
                       <Button onClick={() => router.push(`/admin/movies/edit/${movie.id}`)} variant={"secondary"} size={'icon'}>
                         <Edit2 size={15} />
                       </Button>
-                      <Button variant={"secondary"} size={'icon'}>
+                      <Button onClick={() => handleDelete(movie.id)} variant={"secondary"} size={'icon'}>
                         <Trash2 size={15} />
                       </Button>
                     </div>
