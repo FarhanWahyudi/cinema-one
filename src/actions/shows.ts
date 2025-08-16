@@ -77,7 +77,7 @@ export const getShowById = async (id: string) => {
 }
 
 export const getAllShows = async () => {
-    const { data, error } = await supabase.from('shows').select('*').order('created_at', { ascending: false})
+    const { data, error } = await supabase.from('shows').select('*, movie:movies(*), theatre:theatres(*)').order('created_at', { ascending: false})
 
     if (error) {
         return {

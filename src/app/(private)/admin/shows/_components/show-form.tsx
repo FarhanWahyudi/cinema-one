@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,7 +23,6 @@ import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Textarea } from "@/components/ui/textarea";
 import { IMovie, IShow, ITheatre } from '@/interfaces'
 import React from 'react'
 import { addShow, updateShow } from "@/actions/shows";
@@ -129,7 +127,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Movie</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} defaultValue={field.value.toString()} value={field.value.toString()}>
                     <FormControl>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a movie" />
@@ -153,7 +151,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Theatre</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} defaultValue={field.value.toString()} value={field.value.toString()}>
                     <FormControl>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a theatre" />

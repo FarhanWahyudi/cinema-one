@@ -45,6 +45,6 @@ export interface IShow {
     created_at: string,
     updated_at: string,
 
-    movie?: IMovie,
-    theatre?: ITheatre
+    movie: IMovie,
+    theatre: ITheatre
 }
