@@ -26,6 +26,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { movieGenres } from "@/constants";
+import { uploadFileAndGetUrl } from "@/helpers/file-uploads";
+import { addMovie, updateMovie } from "@/actions/movies";
 
 
 interface MovieFormProps {
@@ -42,6 +44,7 @@ const movieFormSchema: any = z.object({
 })
 
 export default function MovieForm({ formType }: MovieFormProps) {
+  const [ selectedPosterFile, setSelectedPosterFile ] = useState<File | null>(null)
   const [ loading, setLoading ] = useState(false)
   const router = useRouter();
   const form = useForm<z.infer<typeof movieFormSchema>>({
@@ -59,6 +62,27 @@ export default function MovieForm({ formType }: MovieFormProps) {
   async function onSubmit(values: z.infer<typeof movieFormSchema>) {
         try {
             setLoading(true)
+
+            const payload = { ...values }
+            if (selectedPosterFile) {
+              const uploadResponse = await uploadFileAndGetUrl(selectedPosterFile)
+              if (!uploadResponse.success) {
+                throw new Error(uploadResponse.message)
+              }
+              payload.poster_url = uploadResponse.data
+            }
+
+            let response = null
+
+            if (formType === 'add') {
+              response = await addMovie(payload);
+            }
+
+            if (!response?.success) {
+              throw new Error(response?.message || 'failed to add movie')
+            }
+
+            toast.success(response.message || 'Movie added successfully')
             form.reset();
             router.push(`/${values.role}/dashboard`)
         } catch (error: any) {
@@ -150,6 +174,29 @@ export default function MovieForm({ formType }: MovieFormProps) {
               )}
             />
           </div>
+          <div className="w-max">
+            <label htmlFor="file selection">Select a poster</label>
+            <Input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) {
+                  setSelectedPosterFile(file);
+                  form.setValue('poster_url', URL.createObjectURL(file));
+                }
+              }}
+            />
+          </div>
+          {selectedPosterFile && (
+            <div className="mt-3">
+              <img
+                src={URL.createObjectURL(selectedPosterFile)}
+                alt="Selected poster"
+                className="w-32 h-32 object-contain rounded-md shadow-md"
+              />
+            </div>
+          )}
           <div className="flex justify-end gap-3 mt-5">
             <Button type="button" variant={"outline"} onClick={() => router.push('/admin/movies')}>Cancel</Button>
             <Button type="submit" disabled={loading}>
