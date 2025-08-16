@@ -60,37 +60,37 @@ export default function MovieForm({ formType }: MovieFormProps) {
   });
 
   async function onSubmit(values: z.infer<typeof movieFormSchema>) {
-        try {
-            setLoading(true)
+    try {
+      setLoading(true)
 
-            const payload = { ...values }
-            if (selectedPosterFile) {
-              const uploadResponse = await uploadFileAndGetUrl(selectedPosterFile)
-              if (!uploadResponse.success) {
-                throw new Error(uploadResponse.message)
-              }
-              payload.poster_url = uploadResponse.data
-            }
-
-            let response = null
-
-            if (formType === 'add') {
-              response = await addMovie(payload);
-            }
-
-            if (!response?.success) {
-              throw new Error(response?.message || 'failed to add movie')
-            }
-
-            toast.success(response.message || 'Movie added successfully')
-            form.reset();
-            router.push(`/${values.role}/dashboard`)
-        } catch (error: any) {
-            toast.error(error.message)
-        } finally {
-            setLoading(false)
+      const payload = { ...values }
+      if (selectedPosterFile) {
+        const uploadResponse = await uploadFileAndGetUrl(selectedPosterFile)
+        if (!uploadResponse.success) {
+          throw new Error(uploadResponse.message)
         }
+        payload.poster_url = uploadResponse.data
+      }
+
+      let response = null
+
+      if (formType === 'add') {
+        response = await addMovie(payload);
+      }
+
+      if (!response?.success) {
+        throw new Error(response?.message || 'failed to add movie')
+      }
+
+      toast.success(response.message || 'Movie added successfully')
+      form.reset();
+      router.push(`/admin/movies`)
+    } catch (error: any) {
+      toast.error(error.message)
+    } finally {
+      setLoading(false)
     }
+  }
 
   return (
     <div className='mt-5'>

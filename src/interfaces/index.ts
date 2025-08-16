@@ -15,6 +15,7 @@ export interface IMovie {
     description: string,
     release_date: string,
     genre: string[],
+    duration: string,
     poster_url: string,
     is_active: boolean,
     created_at: string,
