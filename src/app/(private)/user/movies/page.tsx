@@ -3,9 +3,18 @@ import PageTitle from '@/components/ui/page-title'
 import { IMovie } from '@/interfaces'
 import React from 'react'
 import MovieTitle from './_components/movie-title'
+import SearchMovies from './_components/search-movies'
 
-export default async function UserMovies() {
-    const response: any = await getActiveMovies({})
+interface MovieTitleProps {
+    searchParams: Promise<{ search?: string}>
+}
+
+export default async function UserMovies({ searchParams }: MovieTitleProps) {
+    const searchParamsObj = await searchParams
+
+    const response: any = await getActiveMovies({
+        search: searchParamsObj.search || ''
+    })
     if (!response.success) {
         return <h1>failed to load movie</h1>
     }
@@ -16,9 +25,10 @@ export default async function UserMovies() {
 
     const movies: IMovie[] = response.data;
     return (
-        <div>
+        <div className='flex flex-col gap-5'>
             <PageTitle title='Latest in Theatres' />
-            <div className='grid grid-cols-4 gap-5 mt-5'>
+            <SearchMovies />
+            <div className='grid grid-cols-4 gap-5'>
                 {movies.map((movie) => (
                     <MovieTitle key={movie.id} movie={movie} />
                 ))}

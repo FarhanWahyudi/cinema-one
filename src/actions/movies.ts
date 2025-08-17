@@ -96,8 +96,8 @@ export const getAllMovies = async () => {
 export const getActiveMovies = async (filters: any) => {
     let qry = supabase.from('movies').select('*').eq('is_active', true).order('created_at', { ascending: false})
 
-    if (filters) {
-
+    if (filters.search) {
+        qry = qry.ilike('name', `%${filters.search}%`)
     }
 
     const { data, error } = await qry
