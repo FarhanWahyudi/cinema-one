@@ -92,3 +92,25 @@ export const getAllMovies = async () => {
         data: data as IMovie[]
     }
 }
+
+export const getActiveMovies = async (filters: any) => {
+    let qry = supabase.from('movies').select('*').eq('is_active', true).order('created_at', { ascending: false})
+
+    if (filters) {
+
+    }
+
+    const { data, error } = await qry
+
+    if (error) {
+        return {
+            success: false,
+            message: error.message
+        }
+    }
+
+    return {
+        success: true,
+        data: data as IMovie[]
+    }
+}
