@@ -28,7 +28,7 @@ export default function PrivateLayout({children}: {children: React.ReactNode}) {
     }, []);
 
     return (
-        <div>
+        <div className="bg-gradient-to-r from-cyan-50 to-cyan-100 min-h-screen">
             <Header />
             <div className="p-5">
                 {children}

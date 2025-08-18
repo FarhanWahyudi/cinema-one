@@ -26,7 +26,7 @@ export default function SidebarMenuItems({
     const pathname = usePathname();
     const router = useRouter();
 
-    const iconSize = 14
+    const iconSize = 16
 
     const userMenuItems: any[] = [
         {
@@ -89,26 +89,28 @@ export default function SidebarMenuItems({
                 open={openSidebar}
                 onOpenChange={(open) => setOpenSidebar(open)}
             >
-                <SheetContent className="min-w-[400px]">
-                    <SheetHeader>
+                <SheetContent className="min-w-[400px] h-screen bg-gradient-to-tr from-cyan-50 to-cyan-200">
+                    <SheetHeader className="h-full">
                         <SheetTitle></SheetTitle>
                         
-                        <div className="flex flex-col gap-10 px-7 mt-10">
-                            {menuItems.map((item) => (
-                                <div key={item.name} className={`flex p-3 items-center gap-2 cursor-pointer ${
-                                    pathname === item.path
-                                        ? 'bg-gray-100 border border-primary rounded text-primary'
-                                        : ''
-                                    }`}
-                                    onClick={() => {
-                                        setOpenSidebar(false);
-                                        router.push(item.path);
-                                    }}
-                                >
-                                    {item.icon}
-                                    <h1 className="text-sm">{item.name}</h1>
-                                </div>
-                            ))}
+                        <div className="flex flex-col justify-between h-full px-7 mt-10">
+                            <div className="flex flex-col gap-5">
+                                {menuItems.map((item) => (
+                                    <div key={item.name} className={`flex p-5 items-center gap-2 cursor-pointer rounded-2xl from-cyan-400 to-cyan-200 hover:bg-cyan-200 transition-all duration-300 ${
+                                        pathname === item.path
+                                            ? 'bg-gradient-to-l border-primary text-primary'
+                                            : ''
+                                        }`}
+                                        onClick={() => {
+                                            setOpenSidebar(false);
+                                            router.push(item.path);
+                                        }}
+                                    >
+                                        {item.icon}
+                                        <h1 className="font-semibold">{item.name}</h1>
+                                    </div>
+                                ))}
+                            </div>
                             <LogoutButton />
                         </div>
                         

@@ -13,7 +13,7 @@ export default function LogoutButton() {
         router.push('/?form=login')
     }
     return (
-        <Button onClick={handleLogout} className="w-full">
+        <Button onClick={handleLogout} className="w-full bg-cyan-600">
             <LogOut className="mr-2 text-white" />
             Logout
         </Button>
