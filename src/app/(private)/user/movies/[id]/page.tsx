@@ -8,12 +8,13 @@ import { Input } from '@/components/ui/input'
 import PageTitle from '@/components/ui/page-title'
 import { IMovie, IShow, ITheatre } from '@/interfaces'
 import dayjs from 'dayjs'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import TheatresAndShowsOfMovie from '../_components/theatres-and-shows-of-movie'
 
 export default function MovieTheatreAndShowPage() {
+  const router = useRouter()
   const params = useParams()
   const [loading, setLoading] = useState(false)
   const [movie, setMovie] = useState<IMovie | null>(null)
@@ -91,6 +92,9 @@ export default function MovieTheatreAndShowPage() {
           </div>
           <Button
             disabled={!selectedShow || !selectedTheatre}
+            onClick={() => {
+              router.push(`/user/movies/${params.id}/select-seats?theatreId=${selectedTheatre}&showId=${selectedShow}`)
+            }}
           >
             Continue
           </Button>
