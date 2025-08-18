@@ -97,7 +97,7 @@ export default function SidebarMenuItems({
                             <div className="flex flex-col gap-5">
                                 {menuItems.map((item) => (
                                     <div key={item.name} className={`flex p-5 items-center gap-2 cursor-pointer rounded-2xl from-cyan-400 to-cyan-200 hover:bg-cyan-200 transition-all duration-300 ${
-                                        pathname === item.path
+                                        pathname.startsWith(item.path)
                                             ? 'bg-gradient-to-l border-primary text-primary'
                                             : ''
                                         }`}

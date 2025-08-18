@@ -51,27 +51,26 @@ export default function UserDashboardPage() {
     }
     return (
         <div>
-            <PageTitle title="User Dashboard" />
             <div className="grid grid-cols-4 gap-5 mt-5">
                 <DashboardCard
-                    title="Total Bookings"
+                    title="Total Pemesanan"
                     value={dashboardData.totalBookings}
-                    description="Total nummber of bookings made by the user"
+                    description="Total pemesanan anda"
                 />
                 <DashboardCard
-                    title="Total Watched"
+                    title="Total Menonton"
                     value={dashboardData.totalMoviesWatched}
-                    description="Total nummber of movie watched by user"
+                    description="Total anda telah menonton di kami"
                 />
                 <DashboardCard
-                    title="Tickets Booked"
+                    title="Tiket Dipesan"
                     value={dashboardData.totalTicketsBooked}
-                    description="Total nummber of tickets booked by the user"
+                    description="Total tiket yang telah anda pesan"
                 />
                 <DashboardCard
-                    title="Amount Spent"
+                    title="Total Pembelanjaan"
                     value={dashboardData.totalAmountSpent}
-                    description="Total amount spent by the user on bookings"
+                    description="Total pembelanjaan anda"
                     isCurrency={true}
                 />
             </div>
