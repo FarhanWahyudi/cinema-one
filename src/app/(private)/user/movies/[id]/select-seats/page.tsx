@@ -12,6 +12,9 @@ import { useParams, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { promise } from 'zod'
 import SeatSelection from '../../_components/seat-selection'
+import { getStripeClientSecret } from '@/actions/payments'
+import toast from 'react-hot-toast'
+import { handleClientScriptLoad } from 'next/script'
 
 export default function SelectSeats() {
     const [loading, setLoading] = useState(false)
@@ -23,6 +26,8 @@ export default function SelectSeats() {
     const [selectedSeats, setSelectedSeats] = useState<number[]>([])
     const paramas = useParams()
     const searchParams = useSearchParams()
+    const [fetchingClientSecret, setFetchingClientSecret] = useState(false)
+    const [clientSecret, setClientSecret] = useState<string | null>(null)
 
     const fetchData = async () => {
         try {
@@ -44,6 +49,24 @@ export default function SelectSeats() {
             setError(error.message)
         } finally {
             setLoading(false)
+        }
+    }
+
+    const getClientSecret = async () => {
+        try {
+            setFetchingClientSecret(true)
+            const response = await getStripeClientSecret(
+                selectedSeats.length * (show?.ticket_price || 0)
+            )
+            if (!response.success) {
+                throw new Error(response.message || "Failed to get payment client server")
+            }
+            console.log(response.data)
+            setClientSecret(response.data)
+        } catch (error: any) {
+            toast.error(error.message || "Failed to get payment client server")
+        } finally {
+            setFetchingClientSecret(false)
         }
     }
 
@@ -78,7 +101,7 @@ export default function SelectSeats() {
                                 </p>
                             </div>
                         )}
-                        <Button disabled={selectedSeats.length === 0}>Book Now</Button>
+                        <Button disabled={selectedSeats.length === 0 || fetchingClientSecret} onClick={getClientSecret}>Book Now</Button>
                     </div>
                 </div>
                 <div className='p-5 border bg-gray-200 border-gray-400 rounded-lg shadow-sm'>
