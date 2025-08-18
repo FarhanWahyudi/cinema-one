@@ -11,6 +11,7 @@ import { IMovie, IShow, ITheatre } from '@/interfaces'
 import { useParams, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { promise } from 'zod'
+import SeatSelection from '../../_components/seat-selection'
 
 export default function SelectSeats() {
     const [loading, setLoading] = useState(false)
@@ -19,6 +20,7 @@ export default function SelectSeats() {
     const [show, setShow] = useState<IShow | null>(null)
 
     const [error, setError] = useState<string | null>(null)
+    const [selectedSeats, setSelectedSeats] = useState<number[]>([])
     const paramas = useParams()
     const searchParams = useSearchParams()
 
@@ -62,7 +64,22 @@ export default function SelectSeats() {
             <div className='flex flex-col gap-5'>
                 <div className='flex justify-between items-center'>
                     <PageTitle title='Select Seats' />
-                    <Button>Book Now</Button>
+                    <div className='flex items-center gap-5'>
+                        {selectedSeats.length > 0 && (
+                            <div className='text-sm text-gray-600'>
+                                <p className='text-sm text-gray-600'>
+                                    Selected Seats: {selectedSeats.map((seat) => seat).join(',')}
+                                </p>
+                                <p className='text-sm text-gray-600'>
+                                    Total Price:{' '}
+                                    <span>
+                                        Rp {selectedSeats.length * show.ticket_price}
+                                    </span>
+                                </p>
+                            </div>
+                        )}
+                        <Button disabled={selectedSeats.length === 0}>Book Now</Button>
+                    </div>
                 </div>
                 <div className='p-5 border bg-gray-200 border-gray-400 rounded-lg shadow-sm'>
                     <h1 className='text-lg font-bold'>{movie.name}</h1>
@@ -70,7 +87,13 @@ export default function SelectSeats() {
                         {theatre.name} - {formatDate(show.date)} - {formatTime(show.time)}
                     </p>
                 </div>
-
+                <SeatSelection
+                    show={show}
+                    theatre={theatre}
+                    movie={movie}
+                    selectedSeats={selectedSeats}
+                    setSelectedSeats={setSelectedSeats}
+                />
             </div>
         )
     }
