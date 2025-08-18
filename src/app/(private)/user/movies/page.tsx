@@ -26,9 +26,9 @@ export default async function UserMovies({ searchParams }: MovieTitleProps) {
     const movies: IMovie[] = response.data;
     return (
         <div className='flex flex-col gap-5'>
-            <PageTitle title='Latest in Theatres' />
+            <PageTitle title='Film' />
             <SearchMovies />
-            <div className='grid grid-cols-4 gap-5'>
+            <div className='grid grid-cols-4 gap-10 mt-10'>
                 {movies.map((movie) => (
                     <MovieTitle key={movie.id} movie={movie} />
                 ))}

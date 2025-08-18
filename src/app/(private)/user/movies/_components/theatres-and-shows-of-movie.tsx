@@ -24,7 +24,7 @@ export default function TheatresAndShowsOfMovie({
 }: TheatresAndShowsProps) {
   return (
     <div>
-      {theatresAndShows.length === 0 && <h1>No theatres or shows availabel for this movie.</h1>}
+      {theatresAndShows.length === 0 && <h1>Tidak ada penayangan film ini pada tanggal yang anda pilih.</h1>}
       <div className='flex flex-col gap-5 mt-5'>
         {theatresAndShows.map((theatreAndShow) => {
           const shows = theatreAndShow.shows
@@ -32,21 +32,18 @@ export default function TheatresAndShowsOfMovie({
             return Number(a.time.split(':')[0]) - Number(b.time.split(':')[0])
           })
           return (
-            <div key={theatreAndShow.theatre.id} className='flex flex-col gap-3 border border-gray-300 rounded-lg p-5'>
-              <div>
-                <h1 className='text-sm font-bold text-primary'>{theatreAndShow.theatre.name}</h1>
-                <p className='text-xs text-gray-500'>{theatreAndShow.theatre.address}</p>
-              </div>
-              <div className='flex gap-5'>
+            <div key={theatreAndShow.theatre.id} className='flex flex-col gap-5 bg-gradient-to-l from-white to-cyan-50 rounded-lg py-10 px-12 z-10'>
+              <h1 className='text-xl font-bold text-primary uppercase'>{theatreAndShow.theatre.name} - {theatreAndShow.theatre.address}</h1>
+              <div className='flex gap-2'>
                 {sortedShow.map((show) => {
                   const isSelected = selectedShow === show.id;
                   return (
                     <div
                       key={show.id}
-                      className={`border p-3 rounded-lg text-sm cursor-pointer ${
+                      className={`px-3 py-1 rounded-lg text-sm cursor-pointer bg-white border ${
                         isSelected
-                          ? 'border-2 border-primary text-primary'
-                          : 'bg-white text-gray-700'
+                          ? 'border-black'
+                          : ''
                       }`}
                       onClick={() => {
                         setSelectedTheatre(theatreAndShow.theatre.id)

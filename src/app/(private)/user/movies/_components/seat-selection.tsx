@@ -27,11 +27,11 @@ export default function SeatSelection({ show, theatre, movie, selectedSeats, set
                 const alreadyBooked = show.booked_seats.includes(index + 1)
                 const isSelected = selectedSeats.includes(index + 1)
                 return (
-                    <div className={`border p-1 rounded cursor-pointer text-center ${
+                    <div className={`border border-black p-1 rounded-lg cursor-pointer text-center ${
                         alreadyBooked && 
-                        "bg-gray-500 text-white cursor-not-allowed pointer-events-none"
+                        "bg-red-600 border-red-600 text-white cursor-not-allowed pointer-events-none"
                     }
-                        ${isSelected && 'bg-primary text-white'}
+                        ${isSelected && 'bg-black text-white'}
                     `}
                         key={index}
                         onClick={() => handleSeatClick(index + 1)}

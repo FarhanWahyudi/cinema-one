@@ -80,13 +80,15 @@ export default function MovieTheatreAndShowPage() {
   
   return (
       <div className='flex flex-col gap-5'>
+        <img src={movie?.poster_url} alt="" className='fixed top-0 left-0 w-full opacity-20 h-[70vh] object-cover [mask-image:linear-gradient(to_bottom,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%] pointer-events-none'/>
         <PageTitle title={movie?.name!} />
         <div className='flex justify-between items-center'>
           <div className='flex flex-col gap-1'>
-            <span className='text-sm text-gray-600'>Select Date</span>
+            <span className='text-sm text-gray-600'>Pilih Tanggal</span>
             <Input
               type='date'
               value={date}
+              className='border-black'
               onChange={(e) => setDate(e.target.value)}
             />
           </div>

@@ -99,30 +99,33 @@ export default function SelectSeats() {
     if (movie && theatre && show) {
         return (
             <div className='flex flex-col gap-5'>
+            <img src={movie?.poster_url} alt="" className='fixed top-0 left-0 w-full opacity-20 h-[70vh] object-cover [mask-image:linear-gradient(to_bottom,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%] pointer-events-none'/>
                 <div className='flex justify-between items-center'>
                     <PageTitle title='Select Seats' />
                     <div className='flex items-center gap-5'>
-                        {selectedSeats.length > 0 && (
-                            <div className='text-sm text-gray-600'>
-                                <p className='text-sm text-gray-600'>
-                                    Selected Seats: {selectedSeats.map((seat) => seat).join(',')}
-                                </p>
-                                <p className='text-sm text-gray-600'>
-                                    Total Price:{' '}
-                                    <span>
-                                        Rp {selectedSeats.length * show.ticket_price}
-                                    </span>
-                                </p>
-                            </div>
-                        )}
                         <Button disabled={selectedSeats.length === 0 || fetchingClientSecret} onClick={getClientSecret}>Book Now</Button>
                     </div>
                 </div>
-                <div className='p-5 border bg-gray-200 border-gray-400 rounded-lg shadow-sm'>
-                    <h1 className='text-lg font-bold'>{movie.name}</h1>
-                    <p className='text-sm to-gray-600'>
-                        {theatre.name} - {formatDate(show.date)} - {formatTime(show.time)}
-                    </p>
+                <div className='p-5 flex justify-between border-none bg-gradient-to-r from-white to-cyan-50 rounded-lg shadow-none z-10'>
+                    <div>
+                        <h1 className='text-lg font-bold'>{movie.name}</h1>
+                        <p className='text-sm to-gray-600 uppercase'>
+                            {theatre.name} - {theatre.address} - {formatDate(show.date)} - {formatTime(show.time)}
+                        </p>
+                    </div>
+                    {selectedSeats.length > 0 && (
+                        <div className='text-sm'>
+                            <p className='text-sm font-semibold'>
+                                Kursi: {selectedSeats.map((seat) => seat).join(',')}
+                            </p>
+                            <p className='text-sm font-semibold'>
+                                Total Harga:{' '}
+                                <span>
+                                    Rp {selectedSeats.length * show.ticket_price}
+                                </span>
+                            </p>
+                        </div>
+                    )}
                 </div>
                 <SeatSelection
                     show={show}
