@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/radio-group"
 import { Input } from "@/components/ui/input"
 import Link from "next/link";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import { loginUser } from "@/actions/users";
 import { useRouter } from "next/navigation";
@@ -31,7 +31,7 @@ const loginFormSchema: any = z.object({
     role: z.string()
 })
 
-export default function LoginForm() {
+export default function LoginForm({ setForm }: {setForm: Dispatch<SetStateAction<'login' | 'register'>>}) {
     const [ loading, setLoading ] = useState(false)
     const router = useRouter();
     const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -64,10 +64,10 @@ export default function LoginForm() {
     
     return (
         <div className="w-full px-10">
-            <h1 className="text-xl uppercase font-bold text-primary">
+            <h1 className="text-xl uppercase font-bold text-cyan-800">
                 Login to your account
             </h1>
-            <hr className="my-5 border-b border-gray-300" />
+            <hr className="my-5 border-b border-cyan-600" />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
                     <FormField
@@ -75,9 +75,9 @@ export default function LoginForm() {
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Email</FormLabel>
+                                <FormLabel className="text-cyan-800">Email</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="" {...field} />
+                                    <Input className="border-cyan-700" placeholder="" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -88,45 +88,11 @@ export default function LoginForm() {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Password</FormLabel>
+                                <FormLabel className="text-cyan-800">Password</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="" type="password" {...field} />
+                                    <Input className="border-cyan-700" placeholder="" type="password" {...field} />
                                 </FormControl>
                                 <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                     <FormField
-                        control={form.control}
-                        name="role"
-                        render={({ field }) => (
-                            <FormItem className="space-y-3">
-                            <FormLabel>Role</FormLabel>
-                            <FormControl>
-                                <RadioGroup
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                                className="flex gap-10"
-                                >
-                                <FormItem className="flex items-center gap-3">
-                                    <FormControl>
-                                        <RadioGroupItem value="user" />
-                                    </FormControl>
-                                    <FormLabel className="font-normal">
-                                        User
-                                    </FormLabel>
-                                </FormItem>
-                                <FormItem className="flex items-center gap-3">
-                                    <FormControl>
-                                        <RadioGroupItem value="admin" />
-                                    </FormControl>
-                                    <FormLabel className="font-normal">
-                                        Admin
-                                    </FormLabel>
-                                </FormItem>
-                                </RadioGroup>
-                            </FormControl>
-                            <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -135,12 +101,12 @@ export default function LoginForm() {
                             <h1 className="text-sm text-gray-600 font-semibold">
                                 Don't have an account ?
                             </h1>
-                            <Link href={"/?form=register"} className="text-sm text-primary underline font-medium">
+                            <span onClick={() => setForm('register')} className="text-sm text-cyan-700 underline font-medium cursor-pointer">
                                 Register
-                            </Link>
+                            </span>
                         </div>
                     </div>
-                    <Button type="submit" disabled={loading}>Login</Button>
+                    <Button type="submit" disabled={loading} className="bg-cyan-600">Login</Button>
                 </form>
             </Form>
         </div>

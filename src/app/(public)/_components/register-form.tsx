@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Link from "next/link";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { registerUser } from "@/actions/users";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ const registerFormSchema = z.object({
     password: z.string().min(6),
 })
 
-export default function RegisterForm() {
+export default function RegisterForm({ setForm }: {setForm: Dispatch<SetStateAction<'login' | 'register'>>}) {
     const [ loading, setLoading ] = useState(false);
     const router = useRouter();
     const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -47,7 +47,7 @@ export default function RegisterForm() {
             }
             toast.success(response.message)
             form.reset();
-            router.push('/?form=login');
+            setForm('login')
         } catch (error: any) {
             toast.error(error.message)            
         } finally {
@@ -57,10 +57,10 @@ export default function RegisterForm() {
     
     return (
         <div className="w-full px-10">
-            <h1 className="text-xl uppercase font-bold text-primary">
+            <h1 className="text-xl uppercase font-bold text-cyan-800">
                 Register your account
             </h1>
-            <hr className="my-5 border-b border-gray-300" />
+            <hr className="my-5 border-b border-cyan-600" />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
                     <FormField  
@@ -68,9 +68,9 @@ export default function RegisterForm() {
                         name="name"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Name</FormLabel>
+                                <FormLabel className="text-cyan-800">Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="" {...field} />
+                                    <Input className="border-cyan-700" placeholder="" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -81,9 +81,9 @@ export default function RegisterForm() {
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Email</FormLabel>
+                                <FormLabel className="text-cyan-800">Email</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="" {...field} />
+                                    <Input className="border-cyan-700" placeholder="" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -94,9 +94,9 @@ export default function RegisterForm() {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Password</FormLabel>
+                                <FormLabel className="text-cyan-800">Password</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="" type="password" {...field} />
+                                    <Input className="border-cyan-700" placeholder="" type="password" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -107,12 +107,12 @@ export default function RegisterForm() {
                             <h1 className="text-sm text-gray-600 font-semibold">
                                 Already have an account ?
                             </h1>
-                            <Link href={"/?form=login"} className="text-sm text-primary underline font-medium">
+                            <span onClick={() => setForm('login')} className="text-sm text-cyan-700 underline font-medium cursor-pointer">
                                 Login
-                            </Link>
+                            </span>
                         </div>
                     </div>
-                    <Button type="submit" disabled={loading}>Register</Button>
+                    <Button type="submit" disabled={loading} className="bg-cyan-600">Register</Button>
                 </form>
             </Form>
         </div>

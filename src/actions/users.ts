@@ -78,13 +78,6 @@ export const loginUser = async (payload: Partial<IUser>) => {
         }
     }
 
-    if (user.role !== payload.role) {
-        return {
-            success: false,
-            message: 'invalid role'
-        }
-    }
-
     // mengembalikan data user
     const jwtToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
         expiresIn: "1d",
