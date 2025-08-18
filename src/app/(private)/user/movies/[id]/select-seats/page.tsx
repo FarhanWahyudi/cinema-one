@@ -15,6 +15,10 @@ import SeatSelection from '../../_components/seat-selection'
 import { getStripeClientSecret } from '@/actions/payments'
 import toast from 'react-hot-toast'
 import { handleClientScriptLoad } from 'next/script'
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import CheckoutForm from '../../_components/checkout-form'
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function SelectSeats() {
     const [loading, setLoading] = useState(false)
@@ -28,6 +32,7 @@ export default function SelectSeats() {
     const searchParams = useSearchParams()
     const [fetchingClientSecret, setFetchingClientSecret] = useState(false)
     const [clientSecret, setClientSecret] = useState<string | null>(null)
+    const [openCheckout, setOpenCheckout] = useState(false)
 
     const fetchData = async () => {
         try {
@@ -63,11 +68,20 @@ export default function SelectSeats() {
             }
             console.log(response.data)
             setClientSecret(response.data)
+            setOpenCheckout(true)
         } catch (error: any) {
             toast.error(error.message || "Failed to get payment client server")
         } finally {
             setFetchingClientSecret(false)
         }
+    }
+
+    const onPaymentSuccess = (paymentId: string) => {
+        console.log("payment successfull with id: ", paymentId)
+    }
+
+    const options: any = {
+        clientSecret: clientSecret,
     }
 
     useEffect(() => {
@@ -117,6 +131,15 @@ export default function SelectSeats() {
                     selectedSeats={selectedSeats}
                     setSelectedSeats={setSelectedSeats}
                 />
+                {openCheckout && clientSecret && (
+                    <Elements stripe={stripePromise} options={options}>
+                        <CheckoutForm
+                            openCheckout={openCheckout}
+                            setOpenCheckout={setOpenCheckout}
+                            onPaymentSuccess={onPaymentSuccess}
+                        />
+                    </Elements>
+                )}
             </div>
         )
     }
