@@ -132,3 +132,20 @@ export const getLoggedInUser = async () => {
         }
     }
 }
+
+export const getAllUsers = async () => {
+    const { data, error } = await supabase.from('user_profiles').select('*')
+
+    if (error) {
+        return {
+            success: false,
+            message: error.message
+        }
+    }
+
+    return {
+        success: true,
+        message: 'user fetched successfully',
+        data: data
+    }
+}

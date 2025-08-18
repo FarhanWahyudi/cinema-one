@@ -48,3 +48,23 @@ export interface IShow {
     movie: IMovie,
     theatre: ITheatre
 }
+
+export interface IBooking {
+    id: string,
+    user_id: string,
+    show_id: string,
+    theatre_id: string,
+    movie_id: string,
+    seat_numbers: number[],
+    total_amount: number,
+    total_tickets: number,
+    status: 'pending' | 'completed' | 'failed',
+    created_at: string,
+    updated_at: string,
+
+    user?: IUser
+    show?: IShow
+    movie?: IMovie,
+    theatre?: ITheatre
+
+}

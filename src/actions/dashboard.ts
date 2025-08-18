@@ -12,7 +12,7 @@ export const getUserDashboardData = async (userId: string) => {
         }
 
         let totalBookings = data.length
-        let totalMovieWatched = 0
+        let totalMoviesWatched = 0
         let totalTicketsBooked = 0
         let totalAmountSpent = 0
 
@@ -24,7 +24,7 @@ export const getUserDashboardData = async (userId: string) => {
 
             if (!movieIdsObject[booking.movie_id]) {
                 movieIdsObject[booking.movie_id] = true
-                totalMovieWatched += 1
+                totalMoviesWatched += 1
             }
         })
 
@@ -33,7 +33,7 @@ export const getUserDashboardData = async (userId: string) => {
             message: "Dashboard data fetched successfully",
             data: {
                 totalBookings,
-                totalMovieWatched,
+                totalMoviesWatched,
                 totalTicketsBooked,
                 totalAmountSpent
             }
