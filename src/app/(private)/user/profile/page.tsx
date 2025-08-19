@@ -11,22 +11,29 @@ export default function UserProfilePage() {
         return <h1>User not found</h1>
     }
 
-    const renderUserProperty = (label: string, value: string | number) => (
-        <div>
-            <h2 className='text-sm text-gray-500'>{label}</h2>
-            <p className='font-bold text-sm'>{value}</p>
-        </div>
-    )
-
     return (
         <div>
             <PageTitle title='User Profile' />
-            <div className='grid grid-cols-3 mt-5 gap-7 border border-gray-300 p-5 rounded shadow-sm'>
-                {renderUserProperty("User ID", user.id)}
-                {renderUserProperty("Name", user.name)}
-                {renderUserProperty("Email", user.email)}
-                {renderUserProperty("Role", user.role)}
-                {renderUserProperty("Joined At", formatDate(user.created_at))}
+            <div className='border border-gray-500 p-10 rounded-xl mt-10 flex justify-center'>
+                <div className='flex flex-col items-center w-max gap-10 '>
+                    <img src="https://t3.ftcdn.net/jpg/08/05/28/22/360_F_805282248_LHUxw7t2pnQ7x8lFEsS2IZgK8IGFXePS.jpg" alt="user" className='w-36 h-36 rounded-full' />
+                    <div className='flex gap-20'>
+                        <div className='font-semibold flex flex-col gap-2'>
+                            <span>User ID</span>
+                            <span>Name</span>
+                            <span>Email</span>
+                            <span>Role</span>
+                            <span>Joined At</span>
+                        </div>
+                        <div className='text-gray-600 font-semibold flex flex-col gap-2'>
+                            <span>{user.id}</span>
+                            <span>{user.name}</span>
+                            <span>{user.email}</span>
+                            <span>{user.role}</span>
+                            <span>{formatDate(user.created_at)}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

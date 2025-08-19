@@ -93,6 +93,7 @@ export default function MovieTheatreAndShowPage() {
             />
           </div>
           <Button
+            className='bg-cyan-600'
             disabled={!selectedShow || !selectedTheatre}
             onClick={() => {
               router.push(`/user/movies/${params.id}/select-seats?theatreId=${selectedTheatre}&showId=${selectedShow}`)

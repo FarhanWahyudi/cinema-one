@@ -103,7 +103,7 @@ export default function SelectSeats() {
                 <div className='flex justify-between items-center'>
                     <PageTitle title='Select Seats' />
                     <div className='flex items-center gap-5'>
-                        <Button disabled={selectedSeats.length === 0 || fetchingClientSecret} onClick={getClientSecret}>Book Now</Button>
+                        <Button className='bg-cyan-600' disabled={selectedSeats.length === 0 || fetchingClientSecret} onClick={getClientSecret}>Book Now</Button>
                     </div>
                 </div>
                 <div className='p-5 flex justify-between border-none bg-gradient-to-r from-white to-cyan-50 rounded-lg shadow-none z-10'>
