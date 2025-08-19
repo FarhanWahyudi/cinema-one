@@ -58,7 +58,8 @@ export interface IBooking {
     seat_numbers: number[],
     total_amount: number,
     total_tickets: number,
-    status: 'pending' | 'completed' | 'failed',
+    status: 'booked' | 'cancelled',
+    payment_id?: string,
     created_at: string,
     updated_at: string,
 

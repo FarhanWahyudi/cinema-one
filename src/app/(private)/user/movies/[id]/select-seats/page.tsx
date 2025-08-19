@@ -1,14 +1,14 @@
 'use client'
 
 import { getMovieById } from '@/actions/movies'
-import { getShowById } from '@/actions/shows'
+import { getShowById, updateShow } from '@/actions/shows'
 import { getTheatreById } from '@/actions/theatres'
 import Spinner from '@/components/functional/spinner'
 import { Button } from '@/components/ui/button'
 import PageTitle from '@/components/ui/page-title'
 import { formatDate, formatTime } from '@/helpers/date-time-formats'
-import { IMovie, IShow, ITheatre } from '@/interfaces'
-import { useParams, useSearchParams } from 'next/navigation'
+import { IBooking, IMovie, IShow, ITheatre } from '@/interfaces'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { promise } from 'zod'
 import SeatSelection from '../../_components/seat-selection'
@@ -18,6 +18,8 @@ import { handleClientScriptLoad } from 'next/script'
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import CheckoutForm from '../../_components/checkout-form'
+import { IUserStore, useUsersStore } from '@/store/users-store'
+import { createBooking } from '@/actions/bookings'
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function SelectSeats() {
@@ -33,6 +35,8 @@ export default function SelectSeats() {
     const [fetchingClientSecret, setFetchingClientSecret] = useState(false)
     const [clientSecret, setClientSecret] = useState<string | null>(null)
     const [openCheckout, setOpenCheckout] = useState(false)
+    const { user } = useUsersStore() as IUserStore
+    const router = useRouter()
 
     const fetchData = async () => {
         try {
@@ -76,8 +80,41 @@ export default function SelectSeats() {
         }
     }
 
-    const onPaymentSuccess = (paymentId: string) => {
-        console.log("payment successfull with id: ", paymentId)
+    const onPaymentSuccess = async (paymentId: string) => {
+        try {
+            const payload: Partial<IBooking> = {
+                user_id: user?.id,
+                show_id: show?.id,
+                theatre_id: theatre?.id,
+                movie_id: movie?.id,
+                seat_numbers: selectedSeats,
+                total_tickets: selectedSeats.length,
+                total_amount: selectedSeats.length * (show?.ticket_price || 0),
+                payment_id: paymentId,
+                status: "booked",
+            }
+
+            const response = await createBooking(payload)
+            if (!response.success) {
+                throw new Error(response.message) || 'Failded to create booking'
+            }
+
+            const existingBookedSeats = show?.booked_seats || []
+            const updatedBookedSeats = [...existingBookedSeats, ...selectedSeats]
+            const showUpdateResponse = await updateShow(show!.id, {
+                ...show,
+                booked_seats: updatedBookedSeats,
+                available_seats_count: theatre!.capacity - updatedBookedSeats.length || 0
+            })
+
+            if (!showUpdateResponse.success) {
+                throw new Error(showUpdateResponse.message || 'Failed to update show')
+            }
+            toast.success("Your booking is successfully")
+            router.push('/user/booking')
+        } catch (error: any) {
+            toast.error(error.message || 'Failed to create booking')
+        }
     }
 
     const options: any = {
@@ -121,7 +158,7 @@ export default function SelectSeats() {
                             <p className='text-sm font-semibold'>
                                 Total Harga:{' '}
                                 <span>
-                                    Rp {selectedSeats.length * show.ticket_price}
+                                    Rp {(selectedSeats.length * show.ticket_price).toFixed(3)}
                                 </span>
                             </p>
                         </div>
