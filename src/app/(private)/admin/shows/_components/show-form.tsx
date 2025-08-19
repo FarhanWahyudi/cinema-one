@@ -126,7 +126,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
               name="movie_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Movie</FormLabel>
+                  <FormLabel>Film</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value.toString()} value={field.value.toString()}>
                     <FormControl>
                       <SelectTrigger className="w-full">
@@ -150,7 +150,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
               name="theatre_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Theatre</FormLabel>
+                  <FormLabel>Teater</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value.toString()} value={field.value.toString()}>
                     <FormControl>
                       <SelectTrigger className="w-full">
@@ -174,7 +174,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date</FormLabel>
+                  <FormLabel>Tanggal</FormLabel>
                   <FormControl>
                     <Input type='date' placeholder="" {...field} />
                   </FormControl>
@@ -187,7 +187,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
               name="time"
               render={({ field }) => (
                   <FormItem>
-                      <FormLabel>Time</FormLabel>
+                      <FormLabel>Jam</FormLabel>
                       <FormControl>
                           <Input type="time" placeholder="" {...field} />
                       </FormControl>
@@ -200,7 +200,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
               name="ticket_price"
               render={({ field }) => (
                   <FormItem>
-                      <FormLabel>Ticket Price</FormLabel>
+                      <FormLabel>Harga Tiket</FormLabel>
                       <FormControl>
                           <Input type="number" placeholder="" {...field}
                             onChange={(e) => {
@@ -216,7 +216,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
           <div className="flex justify-end gap-3 mt-5">
             <Button type="button" variant={"outline"} onClick={() => router.push('/admin/shows')}>Cancel</Button>
             <Button type="submit" disabled={loading}>
-              {formType === 'add' ? 'Add Show' : 'Update Show'}
+              {formType === 'add' ? 'Tambah Show' : 'Update Show'}
             </Button>
           </div>
         </form>

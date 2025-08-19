@@ -62,22 +62,22 @@ export default function AdminShowsPage() {
   }, [])
 
   const columns = [
-    'Movie',
-    'Theatre',
-    'Date',
-    'Time',
-    'Ticket Price',
-    'Available Seats',
+    'Film',
+    'Teater',
+    'Tangaal',
+    'Jam',
+    'Harga Tiket',
+    'Kursi Tersedia',
     'Actions'
   ]
 
   return (
     <div className='flex flex-col gap-5'>
-      <div className='flex justify-between items-center'>
-        <PageTitle title='Shows' />
+      <div className='flex justify-between items-center mb-10'>
+        <PageTitle title='Penayangan' />
         <Button>
           <Link href={'/admin/shows/add'}>
-            Add Show
+            Tambah Show
           </Link>
         </Button>
       </div>
@@ -105,7 +105,7 @@ export default function AdminShowsPage() {
                   <TableCell>{formatTime(show.time)}</TableCell>
                   <TableCell>Rp {show.ticket_price.toFixed(3)}</TableCell>
                   <TableCell>{show.available_seats_count}</TableCell>
-                  <TableCell>
+                  <TableCell className='py-5'>
                     <div className='flex gap-2 items-center'>
                       <Button onClick={() => router.push(`/admin/shows/edit/${show.id}`)} variant={"secondary"} size={'icon'}>
                         <Edit2 size={15} />

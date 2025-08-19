@@ -71,8 +71,8 @@ export default function AdminThearesPage() {
 
     return (
         <div>
-            <div className='flex justify-between items-center'>
-                <PageTitle title='Theatres' />
+            <div className='flex justify-between items-center mb-10'>
+                <PageTitle title='Teater' />
                 <Button onClick={() => {
                     setOpenTheatreForm(true)
                     setFormType('add')
@@ -101,7 +101,7 @@ export default function AdminThearesPage() {
                             <TableCell>{theatre.name}</TableCell>
                             <TableCell>{theatre.address}</TableCell>
                             <TableCell>{theatre.capacity}</TableCell>
-                            <TableCell>
+                            <TableCell  className='py-5'>
                                 <div className='flex gap-2 items-center'>
                                 <Button onClick={() => {
                                     setSelectedTheatre(theatre)
