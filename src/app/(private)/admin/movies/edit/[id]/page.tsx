@@ -18,7 +18,7 @@ export default async function EditMoviePage({ params }: EditMoviePageProps) {
   return (
     <div>
         <PageTitle title='Add Movie' />
-        <MovieForm formType='add' initialValues={movie} />
+        <MovieForm formType='edit' initialValues={movie} />
     </div>
   )
 }

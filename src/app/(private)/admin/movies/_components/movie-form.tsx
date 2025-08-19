@@ -204,9 +204,9 @@ export default function MovieForm({ formType, initialValues }: MovieFormProps) {
             </div>
           )}
           <div className="flex justify-end gap-3 mt-5">
-            <Button type="button" variant={"outline"} onClick={() => router.push('/admin/movies')}>Cancel</Button>
-            <Button type="submit" disabled={loading}>
-              {formType === 'add' ? 'Add Movie' : 'Update Movie'}
+            <Button type="button" className="bg-transparent" variant={"outline"} onClick={() => router.push('/admin/movies')}>Batal</Button>
+            <Button className="bg-cyan-600" type="submit" disabled={loading}>
+              {formType === 'add' ? 'Tambah Film' : 'Update Film'}
             </Button>
           </div>
         </form>

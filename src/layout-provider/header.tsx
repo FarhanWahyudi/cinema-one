@@ -8,7 +8,7 @@ export default function Header() {
     const [ openSidebar, setOpenSidebar ] = useState<boolean>(false);
     
     return (
-        <div className="flex justify-between items-center p-6 fixed top-0 w-full bg-white/10 backdrop-blur-xs shadow-xl shadow-white/20">
+        <div className="flex justify-between items-center p-6 fixed z-100 top-0 w-full bg-white/10 backdrop-blur-xs shadow-xl shadow-white/20">
             <div className="flex items-center gap-5">
                 <img
                     src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Cinema_XXI.svg/2560px-Cinema_XXI.svg.png"}

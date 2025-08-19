@@ -19,6 +19,7 @@ import { deleteMovie, getAllMovies } from '@/actions/movies'
 import { Edit2, Trash2 } from 'lucide-react'
 import Spinner from '@/components/functional/spinner'
 import { useRouter } from 'next/navigation'
+import { formatDate } from '@/helpers/date-time-formats'
 
 
 export default function AdminMoviesPage() {
@@ -62,20 +63,18 @@ export default function AdminMoviesPage() {
   }
 
   const columns = [
-    'Name',
-    'Poster',
-    'Release Date',
-    'Genre',
-    'Duration',
+    'Film',
+    'Tanggal Rilis',
+    'Durasi',
     'Actions'
   ]
   return (
     <div className='flex flex-col gap-5'>
         <div className='flex justify-between items-center'>
-            <PageTitle title='Movies' />
-            <Button>
+            <PageTitle title='Film' />
+            <Button className='bg-cyan-600'>
                 <Link href={'/admin/movies/add'}>
-                    Add Movie
+                    Tambah Film
                 </Link>
             </Button>
         </div>
@@ -98,13 +97,17 @@ export default function AdminMoviesPage() {
             <TableBody>
               {movies.map((movie) => (
                 <TableRow key={movie.id}>
-                  <TableCell>{movie.name}</TableCell>
-                  <TableCell>
-                    <img src={movie.poster_url} alt={movie.name} className='w-20 h-20 object-contain' />
+                  <TableCell className='py-5'>
+                    <div className='flex items-center gap-3'>
+                      <img src={movie.poster_url} alt={movie.name} className='w-20 rounded-lg'/>
+                      <div className='flex flex-col'>
+                        <span className='font-bold'>{movie.name}</span>
+                        <span className='text-gray-500'>{movie.genre}</span>
+                      </div>
+                    </div>
                   </TableCell>
-                  <TableCell>{movie.release_date}</TableCell>
-                  <TableCell>{movie.genre}</TableCell>
-                  <TableCell>{movie.duration}</TableCell>
+                  <TableCell>{formatDate(movie.release_date)}</TableCell>
+                  <TableCell>{movie.duration}m</TableCell>
                   <TableCell>
                     <div className='flex gap-2 items-center'>
                       <Button onClick={() => router.push(`/admin/movies/edit/${movie.id}`)} variant={"secondary"} size={'icon'}>
