@@ -4,6 +4,7 @@ import { getAllUsers } from '@/actions/users'
 import Spinner from '@/components/functional/spinner'
 import PageTitle from '@/components/ui/page-title'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { formatDate } from '@/helpers/date-time-formats'
 import { IUser } from '@/interfaces'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -33,21 +34,21 @@ export default function AdminUsersPage() {
 
     const columns = [
         'User ID',
-        'Name',
+        'Nama',
         'Email',
         'Role',
-        'Created At'
+        'Bergabung Pada'
     ]
     
     return (
         <div>
-            <PageTitle title='All Users' />
+            <PageTitle title='Semua User' />
 
             {loading && <Spinner />}
 
             {!loading && users.length > 0 && (
-                <Table className='mt-5'>
-                    <TableHeader className='bg-gray-200 text-primary font-bold'>
+                <Table className='mt-10'>
+                    <TableHeader>
                         <TableRow>
                             {columns.map((column) => (
                                 <TableHead
@@ -66,12 +67,12 @@ export default function AdminUsersPage() {
                                 <TableCell>{user.name}</TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>
-                                    <select defaultValue={user.role} className='p-3 border border-gray-400 rounded-lg'>
+                                    <select defaultValue={user.role} className='p-1 border border-gray-400 rounded-lg'>
                                         <option value="user">User</option>
                                         <option value="admin">Admin</option>
                                     </select>
                                 </TableCell>
-                                <TableCell>{user.created_at}</TableCell>
+                                <TableCell>{formatDate(user.created_at)}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

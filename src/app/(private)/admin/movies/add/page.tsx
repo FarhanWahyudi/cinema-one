@@ -5,7 +5,7 @@ import MovieForm from '../_components/movie-form'
 export default function AddMoviepage() {
   return (
     <div>
-        <PageTitle title='Add Movie' />
+        <PageTitle title='Tambah Film' />
         <MovieForm formType='add' />
     </div>
   )

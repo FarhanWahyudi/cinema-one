@@ -17,7 +17,7 @@ export default async function EditShowPage({ params }: EditShowPageProps) {
   const initialValues = response.data
   return (
     <div>
-        <PageTitle title='Edit Shows' />
+        <PageTitle title='Edit Penayangan' />
         <ShowForm formType='edit' initialValues={initialValues}/>
     </div>
   )

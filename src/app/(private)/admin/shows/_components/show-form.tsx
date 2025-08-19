@@ -214,9 +214,9 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
             />
           </div>
           <div className="flex justify-end gap-3 mt-5">
-            <Button type="button" variant={"outline"} onClick={() => router.push('/admin/shows')}>Cancel</Button>
+            <Button type="button" variant={"outline"} onClick={() => router.push('/admin/shows')}>Batal</Button>
             <Button type="submit" disabled={loading}>
-              {formType === 'add' ? 'Tambah Show' : 'Update Show'}
+              {formType === 'add' ? 'Tambah Penayangan' : 'Update Penayangan'}
             </Button>
           </div>
         </form>

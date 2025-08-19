@@ -17,7 +17,7 @@ export default async function EditMoviePage({ params }: EditMoviePageProps) {
   const movie = movieResponse.data;
   return (
     <div>
-        <PageTitle title='Add Movie' />
+        <PageTitle title='Edit Film' />
         <MovieForm formType='edit' initialValues={movie} />
     </div>
   )

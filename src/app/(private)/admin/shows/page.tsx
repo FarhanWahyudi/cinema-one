@@ -77,7 +77,7 @@ export default function AdminShowsPage() {
         <PageTitle title='Penayangan' />
         <Button>
           <Link href={'/admin/shows/add'}>
-            Tambah Show
+            Tambah Penayangan
           </Link>
         </Button>
       </div>
@@ -99,13 +99,21 @@ export default function AdminShowsPage() {
             <TableBody>
               {shows.map((show) => (
                 <TableRow key={show.id}>
-                  <TableCell>{show.movie.name}</TableCell>
+                  <TableCell>
+                    <div className='flex items-center gap-3 py-3'>
+                      <img src={show.movie.poster_url} alt={show.movie.name} className='w-20 rounded-lg'/>
+                      <div className='flex flex-col'>
+                        <span className='font-bold'>{show.movie.name}</span>
+                        <span className='text-gray-500'>{show.movie.genre}</span>
+                      </div>
+                    </div>
+                  </TableCell>
                   <TableCell>{show.theatre.name}</TableCell>
                   <TableCell>{formatDate(show.date)}</TableCell>
                   <TableCell>{formatTime(show.time)}</TableCell>
                   <TableCell>Rp {show.ticket_price.toFixed(3)}</TableCell>
                   <TableCell>{show.available_seats_count}</TableCell>
-                  <TableCell className='py-5'>
+                  <TableCell>
                     <div className='flex gap-2 items-center'>
                       <Button onClick={() => router.push(`/admin/shows/edit/${show.id}`)} variant={"secondary"} size={'icon'}>
                         <Edit2 size={15} />

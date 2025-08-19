@@ -35,7 +35,7 @@ export default function SidebarMenuItems({
             icon: <LayoutDashboard size={iconSize} />
         },
         {
-            name: 'Movies',
+            name: 'Film',
             path: '/user/movies',
             icon: <Clapperboard size={iconSize} />
         },
@@ -45,7 +45,7 @@ export default function SidebarMenuItems({
             icon: <ListCheck size={iconSize} />
         },
         {
-            name: 'Profile',
+            name: 'Profil',
             path: '/user/profile',
             icon: <UserRoundPen size={iconSize} />
         },
@@ -57,17 +57,17 @@ export default function SidebarMenuItems({
             icon: <LayoutDashboard size={iconSize} />
         },
         {
-            name: 'Movies',
+            name: 'Film',
             path: '/admin/movies',
             icon: <Clapperboard size={iconSize} />
         },
         {
-            name: 'Theatres',
+            name: 'Teater',
             path: '/admin/theatres',
             icon: <ListCheck size={iconSize} />
         },
         {
-            name: 'Shows',
+            name: 'Penayangan',
             path: '/admin/shows',
             icon: <PlayCircle size={iconSize} />
         },
@@ -89,7 +89,7 @@ export default function SidebarMenuItems({
                 open={openSidebar}
                 onOpenChange={(open) => setOpenSidebar(open)}
             >
-                <SheetContent className="min-w-[400px] h-screen bg-gradient-to-tr from-cyan-50 to-cyan-200">
+                <SheetContent className="min-w-[400px] h-screen bg-gradient-to-tr from-cyan-50 to-cyan-200 z-200">
                     <SheetHeader className="h-full">
                         <SheetTitle></SheetTitle>
                         

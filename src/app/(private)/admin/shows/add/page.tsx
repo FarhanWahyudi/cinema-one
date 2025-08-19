@@ -5,7 +5,7 @@ import ShowForm from '../_components/show-form'
 export default function AddShowPage() {
   return (
     <div>
-        <PageTitle title='Add Shows' />
+        <PageTitle title='Tambah Penayangan' />
         <ShowForm formType='add' />
     </div>
   )

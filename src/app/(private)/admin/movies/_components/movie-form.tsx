@@ -105,7 +105,7 @@ export default function MovieForm({ formType, initialValues }: MovieFormProps) {
             name="name"
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>Nama Film</FormLabel>
                     <FormControl>
                         <Input placeholder="" {...field} />
                     </FormControl>
@@ -118,7 +118,7 @@ export default function MovieForm({ formType, initialValues }: MovieFormProps) {
               name="description"
               render={({ field }) => (
                   <FormItem>
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel>Deskripsi</FormLabel>
                       <FormControl>
                           <Textarea placeholder="" {...field} />
                       </FormControl>
@@ -132,7 +132,7 @@ export default function MovieForm({ formType, initialValues }: MovieFormProps) {
               name="release_date"
               render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Date</FormLabel>
+                    <FormLabel>Tanggal Rilis</FormLabel>
                     <FormControl>
                         <Input type='date' placeholder="" {...field} />
                     </FormControl>
@@ -149,7 +149,7 @@ export default function MovieForm({ formType, initialValues }: MovieFormProps) {
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a genre" />
+                        <SelectValue placeholder="" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -169,7 +169,7 @@ export default function MovieForm({ formType, initialValues }: MovieFormProps) {
               name="duration"
               render={({ field }) => (
                   <FormItem>
-                      <FormLabel>Duration</FormLabel>
+                      <FormLabel>Durasi</FormLabel>
                       <FormControl>
                           <Input placeholder="e.g. 120 minutes" {...field} />
                       </FormControl>
@@ -178,31 +178,33 @@ export default function MovieForm({ formType, initialValues }: MovieFormProps) {
               )}
             />
           </div>
-          <div className="w-max">
-            <label htmlFor="file selection">Select a poster</label>
-            <Input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0]
-                if (file) {
-                  setSelectedPosterFile(file);
-                  form.setValue('poster_url', URL.createObjectURL(file));
-                }
-              }}
-            />
-          </div>
-          {(selectedPosterFile || form.getValues().poster_url ) && (
-            <div className="mt-3">
-              <img
-                src={selectedPosterFile
-                  ? URL.createObjectURL(selectedPosterFile!)
-                  : form.getValues().poster_url}
-                alt="Selected poster"
-                className="w-32 h-32 object-contain rounded-md shadow-md"
+          <div className="flex gap-5">
+            {(selectedPosterFile || form.getValues().poster_url ) && (
+              <div className="mt-3">
+                <img
+                  src={selectedPosterFile
+                    ? URL.createObjectURL(selectedPosterFile!)
+                    : form.getValues().poster_url}
+                  alt="Selected poster"
+                  className="w-32 rounded-lg"
+                />
+              </div>
+            )}
+            <div className="w-max">
+              <label htmlFor="file selection">Pilih Poster</label>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) {
+                    setSelectedPosterFile(file);
+                    form.setValue('poster_url', URL.createObjectURL(file));
+                  }
+                }}
               />
             </div>
-          )}
+          </div>
           <div className="flex justify-end gap-3 mt-5">
             <Button type="button" className="bg-transparent" variant={"outline"} onClick={() => router.push('/admin/movies')}>Batal</Button>
             <Button className="bg-cyan-600" type="submit" disabled={loading}>
