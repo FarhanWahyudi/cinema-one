@@ -47,9 +47,9 @@ export default function AdminThearesPage() {
     }, [])
 
     const columns = [
-        'Name',
-        'Address',
-        'Capacity',
+        'Nama',
+        'Alamat',
+        'Kapasitas',
         'Actions'
     ]
 
@@ -77,7 +77,7 @@ export default function AdminThearesPage() {
                     setOpenTheatreForm(true)
                     setFormType('add')
                     setSelectedTheatre(null)
-                }}>Add theatre</Button>
+                }}>Tambah Teater</Button>
             </div>
 
             {loading && <Spinner />}

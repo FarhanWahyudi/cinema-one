@@ -82,11 +82,11 @@ export default function TheatreForm({ openTheatreForm, setOpenTheatreForm, reloa
         <Dialog open={openTheatreForm} onOpenChange={setOpenTheatreForm}>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>{formType === 'add' ? 'Add Theatre' : 'Edit Theatre'}</DialogTitle>
+                    <DialogTitle>{formType === 'add' ? 'Tambah Teater' : 'Edit Teater'}</DialogTitle>
                     <DialogDescription>
                         {formType === 'add'
-                            ? 'Add a new theatre to the system.'
-                            : 'Edit the detail of the selected theatre.'
+                            ? 'Tambah teater baru.'
+                            : 'Edit detail teater.'
                         }
                     </DialogDescription>
                 </DialogHeader>
@@ -97,7 +97,7 @@ export default function TheatreForm({ openTheatreForm, setOpenTheatreForm, reloa
                         name="name"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Name</FormLabel>
+                                <FormLabel>Nama</FormLabel>
                                 <FormControl>
                                     <Input placeholder="" {...field} />
                                 </FormControl>
@@ -110,7 +110,7 @@ export default function TheatreForm({ openTheatreForm, setOpenTheatreForm, reloa
                         name="address"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Address</FormLabel>
+                                <FormLabel>Alamat</FormLabel>
                                 <FormControl>
                                     <Input placeholder="" {...field} />
                                 </FormControl>
@@ -123,7 +123,7 @@ export default function TheatreForm({ openTheatreForm, setOpenTheatreForm, reloa
                         name="capacity"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Capacity</FormLabel>
+                                <FormLabel>Kapasitas</FormLabel>
                                 <FormControl>
                                     <Input
                                         type='number'
@@ -136,9 +136,9 @@ export default function TheatreForm({ openTheatreForm, setOpenTheatreForm, reloa
                         )}
                     />
                     <div className="flex justify-end gap-3 mt-5">
-                        <Button type="button" variant={"outline"} onClick={() => {setOpenTheatreForm(false); form.reset()}}>Cancel</Button>
+                        <Button type="button" variant={"outline"} onClick={() => {setOpenTheatreForm(false); form.reset()}}>Batal</Button>
                         <Button type="submit" disabled={loading}>
-                        {formType === 'add' ? 'Add Theatre' : 'Update Theatre'}
+                        {formType === 'add' ? 'Tambah Teater' : 'Edit Teater'}
                         </Button>
                     </div>
                     </form>
