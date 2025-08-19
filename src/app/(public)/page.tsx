@@ -31,7 +31,7 @@ export default function Homepage() {
                     </div>
                 </div>
                 <div className="flex gap-10">
-                    <button onClick={() => {setOpenSheet(true); setForm('login')}} className="font-semibold">Login</button>
+                    <button onClick={() => {setOpenSheet(true); setForm('login')}} className="font-bold text-cyan-600">Login</button>
                     <Button onClick={() => {setOpenSheet(true); setForm('register')}} className="rounded-full bg-cyan-600">Buat Akun</Button>
                 </div>
             </div>
@@ -39,12 +39,12 @@ export default function Homepage() {
                 <div className="col-span-1">
                     <div className="flex flex-col gap-4">
                         <h1 className="text-2xl font-bold">
-                            Book Your Movie Tickets Instantly
+                            Pesan Tiket Film Anda Segera
                         </h1>
                         <p className="text-base font-semibold text-gray-500">
-                            CineGo is your one-stop platform for booking movie tickets across multiple theaters. Browse the latest movies, select your preferred seats, and enjoy a smooth, hassle-free booking experience. Whether it's a weekend blockbuster or a weekday show, CineGo has you covered.
+                            Cinema XXI adalah platform terpadu untuk memesan tiket film di berbagai bioskop XXI. Telusuri film-film terbaru, pilih kursi yang Anda inginkan, dan nikmati pengalaman pemesanan yang mudah dan praktis. Baik film blockbuster akhir pekan maupun film di hari kerja, Cinema XXI siap membantu Anda.
                         </p>
-                        <Button className="rounded-full px-10 bg-cyan-600 w-max">Get Started</Button>
+                        <Button onClick={() => {setForm('login'); setOpenSheet(true)}} className="rounded-full px-10 bg-cyan-600 w-max">Ayo Mulai!</Button>
                     </div>
                 </div>
                 <div className="col-span-1">

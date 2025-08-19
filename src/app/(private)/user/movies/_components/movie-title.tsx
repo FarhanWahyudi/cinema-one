@@ -13,9 +13,9 @@ export default function MovieTitle({ movie }: { movie: IMovie }) {
             <h1 className=' font-bold text-primary truncate'>{movie.name}</h1>
             <hr className='my-3 border-gray-300' />
             <h1 className='text-sm text-gray-700'>
-                Release Date: {formatDate(movie.release_date)}
+                Tanggal Rilis: {formatDate(movie.release_date)}
             </h1>
-            <h1 className='text-sm text-gray-700'>Genre: {movie.genre}</h1>
+            <h1 className='text-sm text-gray-700 capitalize'>Genre: {movie.genre}</h1>
         </div>
     )
 }
