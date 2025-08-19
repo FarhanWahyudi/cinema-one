@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/table"
 import { Edit2, Trash2 } from 'lucide-react'
 import { formatDate, formatTime } from '@/helpers/date-time-formats'
+import NoDataMessage from '@/components/functional/no-data-message'
 
 export default function AdminShowsPage() {
   const [ shows, setShows ] = useState<IShow[]>([])
@@ -84,7 +85,7 @@ export default function AdminShowsPage() {
       {loading && <Spinner />}
       
       {!loading && shows.length === 0 && (
-        <h1 className='text-center text-lg'>No Show Found</h1>
+        <NoDataMessage />
       )}
 
       {!loading && shows.length > 0 && (

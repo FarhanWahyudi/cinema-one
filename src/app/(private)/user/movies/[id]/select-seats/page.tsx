@@ -20,6 +20,7 @@ import {loadStripe} from '@stripe/stripe-js';
 import CheckoutForm from '../../_components/checkout-form'
 import { IUserStore, useUsersStore } from '@/store/users-store'
 import { createBooking } from '@/actions/bookings'
+import NoDataMessage from '@/components/functional/no-data-message'
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function SelectSeats() {
@@ -140,7 +141,7 @@ export default function SelectSeats() {
                 <div className='flex justify-between items-center'>
                     <PageTitle title='Select Seats' />
                     <div className='flex items-center gap-5'>
-                        <Button className='bg-cyan-600' disabled={selectedSeats.length === 0 || fetchingClientSecret} onClick={getClientSecret}>Book Now</Button>
+                        <Button className='bg-cyan-600' disabled={selectedSeats.length === 0 || fetchingClientSecret} onClick={getClientSecret}>Pesan Sekarang</Button>
                     </div>
                 </div>
                 <div className='p-5 flex justify-between border-none bg-gradient-to-r from-white to-cyan-50 rounded-lg shadow-none z-10'>
@@ -153,7 +154,7 @@ export default function SelectSeats() {
                     {selectedSeats.length > 0 && (
                         <div className='text-sm'>
                             <p className='text-sm font-semibold'>
-                                Kursi: {selectedSeats.map((seat) => seat).join(',')}
+                                Kursi: {selectedSeats.map((seat) => seat).join(', ')}
                             </p>
                             <p className='text-sm font-semibold'>
                                 Total Harga:{' '}
@@ -185,7 +186,7 @@ export default function SelectSeats() {
     }
 
     return (
-       <h1>No data found</h1>
+       <NoDataMessage />
 
     )
 }

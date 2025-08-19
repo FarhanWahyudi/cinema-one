@@ -19,6 +19,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Edit2, Trash2 } from 'lucide-react'
+import NoDataMessage from '@/components/functional/no-data-message'
 
 export default function AdminThearesPage() {
     const [ openTheatreForm, setOpenTheatreForm ] = useState(false)
@@ -83,7 +84,7 @@ export default function AdminThearesPage() {
             {loading && <Spinner />}
             
             {!loading && theatres.length === 0 && (
-                <h1 className='text-center text-lg'>No Theatres Found</h1>
+                <NoDataMessage />
             )}
 
             {!loading && theatres.length > 0 && (

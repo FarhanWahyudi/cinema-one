@@ -20,6 +20,7 @@ import { Edit2, Trash2 } from 'lucide-react'
 import Spinner from '@/components/functional/spinner'
 import { useRouter } from 'next/navigation'
 import { formatDate } from '@/helpers/date-time-formats'
+import NoDataMessage from '@/components/functional/no-data-message'
 
 
 export default function AdminMoviesPage() {
@@ -82,7 +83,7 @@ export default function AdminMoviesPage() {
         {loading && <Spinner />}
 
         {!loading && movies.length === 0 && (
-          <h1 className='text-center text-lg'>No Movie Found</h1>
+          <NoDataMessage />
         )}
 
         {!loading && movies.length > 0 && (

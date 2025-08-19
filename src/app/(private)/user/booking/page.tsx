@@ -19,6 +19,7 @@ import {
 import Spinner from '@/components/functional/spinner';
 import { formatDate, formatTime } from '@/helpers/date-time-formats';
 import dayjs from 'dayjs';
+import NoDataMessage from '@/components/functional/no-data-message';
 
 export default function UserBookingsPage() {
   const [bookings, setBookins] = useState<IBooking[]>([])
@@ -63,7 +64,7 @@ export default function UserBookingsPage() {
         {loading && <Spinner />}
         
         {!loading && bookings.length === 0 && (
-          <h1 className='text-center text-lg'>No Bookings Found</h1>
+          <NoDataMessage />
         )}
 
         {!loading && bookings.length > 0 && (

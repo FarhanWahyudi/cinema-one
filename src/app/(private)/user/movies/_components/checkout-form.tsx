@@ -65,9 +65,9 @@ export default function CheckoutForm({ openCheckout, setOpenCheckout, onPaymentS
             <form className='flex flex-col justify-between p-5'>
                 <PaymentElement />
                 <div className='flex gap-3 justify-end mt-5'>
-                    <Button onClick={() => setOpenCheckout(false)} disabled={loading} type='button' variant={'outline'}>Cancel</Button>
+                    <Button onClick={() => setOpenCheckout(false)} disabled={loading} type='button' variant={'outline'}>Batal</Button>
                     <Button className='bg-cyan-600' type='submit' disabled={!stripe || loading}>
-                        Pay
+                        Bayar
                     </Button>
                 </div>
             </form>

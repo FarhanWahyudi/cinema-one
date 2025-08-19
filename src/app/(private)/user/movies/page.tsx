@@ -4,6 +4,7 @@ import { IMovie } from '@/interfaces'
 import React from 'react'
 import MovieTitle from './_components/movie-title'
 import SearchMovies from './_components/search-movies'
+import NoDataMessage from '@/components/functional/no-data-message'
 
 interface MovieTitleProps {
     searchParams: Promise<{ search?: string}>
@@ -20,7 +21,7 @@ export default async function UserMovies({ searchParams }: MovieTitleProps) {
     }
 
     if (response.data.length === 0) {
-        return <h1>No Movies Found</h1>
+        return <NoDataMessage />
     }
 
     const movies: IMovie[] = response.data;
