@@ -7,6 +7,16 @@ import PageTitle from "@/components/ui/page-title";
 import { IUserStore, useUsersStore } from "@/store/users-store";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { AppSidebar } from "@/components/app-sidebar"
+import { ChartAreaInteractive } from "@/components/chart-area-interactive"
+import { DataTable } from "@/components/data-table"
+import { SectionCards } from "@/components/section-cards"
+import { SiteHeader } from "@/components/site-header"
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar"
+import data from "./data.json"
 
 export default function UserDashboardPage() {
     const [dashboardData, setDashboardData] = useState({
@@ -50,7 +60,7 @@ export default function UserDashboardPage() {
         return <h1>{error}</h1>
     }
     return (
-        <div>
+        <div className="flex flex-col gap-5">
             <div className="grid grid-cols-4 gap-5 mt-5">
                 <DashboardCard
                     title="Total Pemesanan"
@@ -73,6 +83,11 @@ export default function UserDashboardPage() {
                     description="Total pembelanjaan anda"
                     isCurrency={true}
                 />
+            </div>
+            <ChartAreaInteractive />
+            <div className="bg-white p-8 rounded-xl">
+                <h2 className="font-bold text-2xl mb-5">Riwayat Tontonan</h2>
+                <DataTable data={data} />
             </div>
         </div>
     )

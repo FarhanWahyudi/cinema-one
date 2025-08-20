@@ -55,7 +55,7 @@ export interface IBooking {
     show_id: string,
     theatre_id: string,
     movie_id: string,
-    seat_numbers: number[],
+    seat_number: number[],
     total_amount: number,
     total_tickets: number,
     status: 'booked' | 'cancelled',

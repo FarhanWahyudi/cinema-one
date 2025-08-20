@@ -105,7 +105,7 @@ export default function AdminShowsPage() {
                       <img src={show.movie.poster_url} alt={show.movie.name} className='w-20 rounded-lg'/>
                       <div className='flex flex-col'>
                         <span className='font-bold'>{show.movie.name}</span>
-                        <span className='text-gray-500'>{show.movie.genre}</span>
+                        <span className='text-gray-500 capitalize'>{show.movie.genre}</span>
                       </div>
                     </div>
                   </TableCell>
