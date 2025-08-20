@@ -99,8 +99,8 @@ export default function AdminThearesPage() {
                     <TableBody>
                     {theatres.map((theatre) => (
                         <TableRow key={theatre.id}>
-                            <TableCell>{theatre.name}</TableCell>
-                            <TableCell>{theatre.address}</TableCell>
+                            <TableCell className='uppercase'>{theatre.name}</TableCell>
+                            <TableCell className='capitalize'>{theatre.address}</TableCell>
                             <TableCell>{theatre.capacity}</TableCell>
                             <TableCell  className='py-5'>
                                 <div className='flex gap-2 items-center'>

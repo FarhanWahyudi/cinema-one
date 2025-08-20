@@ -54,7 +54,7 @@ export default function LoginForm({ setForm }: {setForm: Dispatch<SetStateAction
             Cookies.set("jwt_token", response.data!);
             Cookies.set("user_role", values.role);
             form.reset();
-            router.push(`/${values.role}/dashboard`)
+            router.push(`/${response.user.role}/dashboard`)
         } catch (error: any) {
             toast.error(error.message)
         } finally {

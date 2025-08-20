@@ -86,7 +86,8 @@ export const loginUser = async (payload: Partial<IUser>) => {
     return {
         success: true,
         message: 'user logged in successfully',
-        data: jwtToken
+        data: jwtToken,
+        user: user
     }
 }
 

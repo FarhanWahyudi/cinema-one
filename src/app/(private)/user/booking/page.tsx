@@ -118,20 +118,20 @@ export default function UserBookingsPage() {
               {bookings.map((booking) => (
                 <TableRow key={booking.id}>
                   
-                  <TableCell>{booking.theatre?.name}</TableCell>
+                  <TableCell className='uppercase'>{booking.theatre?.name}</TableCell>
                   <TableCell>{booking.movie?.name}</TableCell>
                   <TableCell>{formatDate(booking.show!.date)} - {formatTime(booking.show!.time)}</TableCell>
                   <TableCell>{booking.seat_number.join(', ')}</TableCell>
-                  <TableCell>{booking.total_amount}</TableCell>
+                  <TableCell>Rp {booking.total_amount.toFixed(3)}</TableCell>
                   <TableCell>{booking.status.toUpperCase()}</TableCell>
-                  <TableCell>
+                  <TableCell className='py-3'>
                     <div className='flex items-center gap-5'>
-                      {dayjs(booking.show?.date).isAfter(dayjs()) && booking.status === 'booked' && (
-                        <span className='text-sm cursor-pointer py-5' onClick={() => {
+                        <Button className='text-sm bg-red-500'
+                        disabled={dayjs(booking.show?.date).isAfter(dayjs()) && booking.status === 'booked'}
+                        onClick={() => {
                           setSelectedBooking(booking)
                           setShowCancelModel(true)
-                        }}>Cancel</span>
-                      )}
+                        }}>Cancel</Button>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -144,12 +144,12 @@ export default function UserBookingsPage() {
           <Dialog open={showCancelModel} onOpenChange={setShowCancelModel}>
               <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                      <DialogTitle></DialogTitle>
-                      <DialogDescription></DialogDescription>
+                      <DialogTitle>Batalkan Pesanan</DialogTitle>
+                      <DialogDescription>Biaya yang anda keluarkan akan di kembalikan dalam waktu 1x24 jam</DialogDescription>
                   </DialogHeader>
-                  <div className='flex justify-end gap-5'>
-                    <Button variant={'outline'}>Batal</Button>
-                    <Button onClick={handleCancelBooking} disabled={cancelling}>Ya, Batalkan</Button>
+                  <div className='flex gap-5 mt-5'>
+                    <Button className='flex-1' variant={'outline'} onClick={() => setShowCancelModel(false)}>Batal</Button>
+                    <Button className='flex-1' onClick={handleCancelBooking} disabled={cancelling}>Ya, Batalkan</Button>
                   </div>
               </DialogContent>
           </Dialog>

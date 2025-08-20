@@ -14,6 +14,7 @@ export default function DashboardCard({ title, value, description, isCurrency }:
             <h1 className='text-4xl font-bold text-gray-700'>
                 {isCurrency && 'Rp '}
                 {value}
+                {isCurrency && '.000'}
             </h1>
             <p className='text-xs text-gray-500'>{description}</p>
         </div>

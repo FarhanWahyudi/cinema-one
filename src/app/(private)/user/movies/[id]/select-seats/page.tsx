@@ -88,7 +88,7 @@ export default function SelectSeats() {
                 show_id: show?.id,
                 theatre_id: theatre?.id,
                 movie_id: movie?.id,
-                seat_numbers: selectedSeats,
+                seat_number: selectedSeats,
                 total_tickets: selectedSeats.length,
                 total_amount: selectedSeats.length * (show?.ticket_price || 0),
                 payment_id: paymentId,

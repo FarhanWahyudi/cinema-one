@@ -61,7 +61,7 @@ export const cancelBooking = async (bookingId: string, showId: string, seatNumbe
             status: 'cancelled'
         }).eq('id', bookingId)
 
-        const { data: showData, error: showError } = await supabase.from('show').select('*').eq('id', showId)
+        const { data: showData, error: showError } = await supabase.from('shows').select('*').eq('id', showId)
 
         if (updateError || showError) {
             throw new Error(updateError?.message || showError?.message || 'Failed to cancel booking')
@@ -74,7 +74,7 @@ export const cancelBooking = async (bookingId: string, showId: string, seatNumbe
 
         const { error: updateShowError } = await supabase.from('shows').update({
             booked_seats: updateBookedSeats,
-            availabel_seats_count: updateAvailableSeatsCount
+            available_seats_count: updateAvailableSeatsCount
         }).eq('id', showId)
 
         if (updateShowError) {

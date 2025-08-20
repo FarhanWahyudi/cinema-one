@@ -159,7 +159,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
                     </FormControl>
                     <SelectContent>
                       {theatres.map((theatre) => (
-                        <SelectItem key={theatre.id} value={theatre.id.toString()}>
+                        <SelectItem key={theatre.id} value={theatre.id.toString()} className="uppercase">
                           {theatre.name}
                         </SelectItem>
                       ))}

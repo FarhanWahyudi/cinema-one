@@ -121,7 +121,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     accessorKey: "header",
     header: "Header",
     cell: ({ row }) => {
-      return <TableCellViewer item={row.original} />
+      return <span>{row.original.header}</span>
     },
     enableHiding: false,
   },

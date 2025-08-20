@@ -109,7 +109,7 @@ export default function AdminShowsPage() {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell>{show.theatre.name}</TableCell>
+                  <TableCell className='uppercase'>{show.theatre.name}</TableCell>
                   <TableCell>{formatDate(show.date)}</TableCell>
                   <TableCell>{formatTime(show.time)}</TableCell>
                   <TableCell>Rp {show.ticket_price.toFixed(3)}</TableCell>
