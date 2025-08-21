@@ -96,7 +96,7 @@ export default function UserDashboardPage() {
                     <DashboardCard
                         title="Total Pemesanan"
                         value={dashboardData.totalBookings}
-                        description="Total pemesanan anda"
+                        description="Total pesanan anda"
                     />
                 </Link>
                 <Link href="/admin/booking">
@@ -110,7 +110,7 @@ export default function UserDashboardPage() {
                     <DashboardCard
                         title="Tiket Dipesan"
                         value={dashboardData.totalTicketsBooked}
-                        description="Total tiket yang telah anda pesan"
+                        description="Total tiket yang telah anda beli"
                     />
                 </Link>
                 <Link href="/admin/booking">
@@ -137,7 +137,7 @@ export default function UserDashboardPage() {
                         <TableRow key={booking.id}>
                         
                         <TableCell className="uppercase">{booking.theatre?.name}</TableCell>
-                        <TableCell>{booking.movie?.name}</TableCell>
+                        <TableCell className='uppercase'>{booking.movie?.name}</TableCell>
                         <TableCell>{formatDate(booking.show!.date)} - {formatTime(booking.show!.time)}</TableCell>
                         <TableCell>{booking.seat_number.join(', ')}</TableCell>
                         <TableCell>Rp {booking.total_amount.toFixed(3)}</TableCell>

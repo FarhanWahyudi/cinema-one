@@ -130,12 +130,12 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
                   <Select onValueChange={field.onChange} defaultValue={field.value.toString()} value={field.value.toString()}>
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a movie" />
+                        <SelectValue placeholder="Pilih Film" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {movies.map((movie) => (
-                        <SelectItem key={movie.id} value={movie.id.toString()}>
+                        <SelectItem key={movie.id} value={movie.id.toString()} className='uppercase'>
                           {movie.name}
                         </SelectItem>
                       ))}
@@ -154,7 +154,7 @@ export default function ShowForm({ formType, initialValues }: ShowFormProps) {
                   <Select onValueChange={field.onChange} defaultValue={field.value.toString()} value={field.value.toString()}>
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a theatre" />
+                        <SelectValue placeholder="Pilih Teater" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

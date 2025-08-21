@@ -119,7 +119,7 @@ export default function UserBookingsPage() {
                 <TableRow key={booking.id}>
                   
                   <TableCell className='uppercase'>{booking.theatre?.name}</TableCell>
-                  <TableCell>{booking.movie?.name}</TableCell>
+                  <TableCell className='uppercase'>{booking.movie?.name}</TableCell>
                   <TableCell>{formatDate(booking.show!.date)} - {formatTime(booking.show!.time)}</TableCell>
                   <TableCell>{booking.seat_number.join(', ')}</TableCell>
                   <TableCell>Rp {booking.total_amount.toFixed(3)}</TableCell>

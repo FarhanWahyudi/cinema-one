@@ -27,6 +27,7 @@ export interface ITheatre {
     name: string,
     address: string,
     capacity: number,
+    theatre_img: string,
     is_active: boolean,
     created_at: string,
     updated_at: string,

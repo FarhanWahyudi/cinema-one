@@ -104,7 +104,7 @@ export default function AdminShowsPage() {
                     <div className='flex items-center gap-3 py-3'>
                       <img src={show.movie.poster_url} alt={show.movie.name} className='w-20 rounded-lg'/>
                       <div className='flex flex-col'>
-                        <span className='font-bold'>{show.movie.name}</span>
+                        <span className='font-bold uppercase'>{show.movie.name}</span>
                         <span className='text-gray-500 capitalize'>{show.movie.genre}</span>
                       </div>
                     </div>

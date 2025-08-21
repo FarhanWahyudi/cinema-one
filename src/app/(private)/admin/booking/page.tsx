@@ -74,8 +74,8 @@ export default function UserBookingsPage() {
               {bookings.map((booking) => (
                 <TableRow key={booking.id}>
                   
-                  <TableCell>{booking.theatre?.name}</TableCell>
-                  <TableCell>{booking.movie?.name}</TableCell>
+                  <TableCell className='uppercase'>{booking.theatre?.name}</TableCell>
+                  <TableCell className='uppercase'>{booking.movie?.name}</TableCell>
                   <TableCell>{formatDate(booking.show!.date)} - {formatTime(booking.show!.time)}</TableCell>
                   <TableCell>{booking.seat_number.join(', ')}</TableCell>
                   <TableCell>{booking.total_amount}</TableCell>
