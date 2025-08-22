@@ -13,8 +13,8 @@ export function middleware(request: NextRequest) {
 
         const role = request.cookies.get('user_role')?.value || '';
 
-        if (token && !isPrivate) {
-            return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
+        if (token && !isPrivate && role === 'admin') {
+            return NextResponse.redirect(new URL(`/admin/dashboard`, request.url))
         }
 
         return NextResponse.next();

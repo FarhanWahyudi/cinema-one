@@ -20,6 +20,8 @@ export interface IMovie {
     is_active: boolean,
     created_at: string,
     updated_at: string,
+
+    show?: IShow[]
 }
 
 export interface ITheatre {

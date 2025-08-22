@@ -12,6 +12,7 @@ import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import TheatresAndShowsOfMovie from '../_components/theatres-and-shows-of-movie'
+import { formatDate, formatDuration } from '@/helpers/date-time-formats'
 
 export default function MovieTheatreAndShowPage() {
   const router = useRouter()
@@ -37,6 +38,7 @@ export default function MovieTheatreAndShowPage() {
       if (!movieData.success) {
         throw new Error(movieData.message || 'Failed to fetch movie details')
       }
+      console.log(movieData.data.show)
       setMovie(movieData.data)
     } catch (error: any) {
       setError('Failed to fetch movie details')
@@ -80,27 +82,32 @@ export default function MovieTheatreAndShowPage() {
   
   return (
       <div className='flex flex-col gap-5'>
-        <img src={movie?.poster_url} alt="" className='fixed top-0 left-0 w-full opacity-20 h-[70vh] object-cover [mask-image:linear-gradient(to_bottom,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%] pointer-events-none'/>
-        <PageTitle title={movie?.name.toUpperCase()!} />
-        <div className='flex justify-between items-center'>
-          <div className='flex flex-col gap-1'>
-            <span className='text-sm text-gray-600'>Pilih Tanggal</span>
-            <Input
-              type='date'
-              value={date}
-              className='border-black'
-              onChange={(e) => setDate(e.target.value)}
-            />
+        <div className="w-full h-[500px] bg-black flex justify-between items-center rounded-3xl overflow-hidden">
+          <div className="text-white uppercase flex flex-col gap-2 ml-26">
+              <h2 className="text-3xl font-bold">{movie?.name}</h2>
+              <span>{movie?.genre} - {formatDuration(Number(movie?.duration))}</span>
+              <p className='line-clamp-4 text-gray-300 text-sm mt-5'>{movie?.description}</p>
           </div>
-          <Button
-            className='bg-cyan-600'
-            disabled={!selectedShow || !selectedTheatre}
-            onClick={() => {
-              router.push(`/user/movies/${params.id}/select-seats?theatreId=${selectedTheatre}&showId=${selectedShow}`)
-            }}
+          <div className="flex-none w-[50%] min-h-full bg-cover flex items-end py-16 px-32 bg-center rounded-l-full"
+              style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.2)), url(${movie?.poster_url})`}}
           >
-            Continue
-          </Button>
+          </div>
+        </div>
+        <div className='w-full -mt-12 flex justify-center'>
+          <div className='w-[50%] bg-white h-24 rounded-xl px-10 flex gap-3'>
+          {[...new Set(movie?.show?.map(show => show.date))].map((date, idx) => (
+            <div key={idx}
+            className='bg-cyan-600 h-full w-max text-lg text-white flex flex-col items-center justify-center px-5 cursor-pointer'
+            onClick={() => setDate(date)}>
+              {formatDate(date).split(" ").map((char, i) => {
+                if (i === 1) {
+                  return <span key={i} className='font-bold'>{char}</span>
+                }
+                return <span key={i}>{char}</span>
+              })}
+            </div>
+          ))}
+          </div>
         </div>
         {fetchingShows
           ? <Spinner />

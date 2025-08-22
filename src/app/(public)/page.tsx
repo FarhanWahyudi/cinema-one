@@ -1,5 +1,9 @@
 "use client"
 
+import { getLoggedInUser } from "@/actions/users";
+import toast from "react-hot-toast";
+import { IUserStore, useUsersStore } from "@/store/users-store";
+import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 import {
@@ -10,7 +14,7 @@ import {
 } from "@/components/ui/sheet"
 import LoginForm from "./_components/login-form"
 import RegisterForm from "./_components/register-form"
-import { MapPin, Search } from "lucide-react"
+import { CircleUserRound, MapPin, Menu, Search } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
@@ -30,6 +34,7 @@ import { useRouter } from "next/navigation"
 import MovieTitle from "../(private)/user/movies/_components/movie-title"
 import Spinner from "@/components/functional/spinner"
 import { getAllTheatres } from "@/actions/theatres"
+import Link from "next/link";
 
 interface MovieTitleProps {
     searchParams: Promise<{ search?: string}>
@@ -44,6 +49,24 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
     const [scrolled, setScrolled] = useState(false)
     const router = useRouter()
     const [loading, setLoading] = useState(false)
+    const { user } = useUsersStore() as IUserStore;
+    const { setUser } = useUsersStore() as IUserStore;
+
+    const fetchData = async () => {
+        try {
+            const response = await getLoggedInUser();
+            if (!response.success) {
+                throw new Error(response.message)
+            }
+            setUser(response.data);
+        } catch (error) {
+            Cookies.remove('jwt_token');
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const handleSearch = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -90,30 +113,51 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
             <div className={`px-20 py-5 flex justify-between items-center fixed top-0 w-full z-100 transition-all duration-300
                 ${scrolled ? 'bg-cyan-600' : 'bg-transparent'}
             `}>
-                <div className="flex items-center gap-5">
-                    <img
-                        src={"https://cinepolis.co.id/images/cinepolis-logo.png"}
-                        alt="logo"
-                        className="w-24"
-                    />
-                    <div className="flex items-center text-white px-2 py-1 gap-1">
-                        <MapPin className="w-3.5" />
-                        <h2 className="text-sm font-semibold">MALANG</h2>
+                    <div className="flex items-center gap-5">
+                        <Link href={'/'}>
+                            <img
+                                src={"https://cinepolis.co.id/images/cinepolis-logo.png"}
+                                alt="logo"
+                                className="w-24"
+                            />
+                        </Link>
+                        <div className="flex items-center text-white px-2 py-1 gap-1">
+                            <MapPin className="w-3.5" />
+                            <h2 className="text-sm font-semibold">MALANG</h2>
+                        </div>
                     </div>
-                </div>
+                    <div className="text-white space-x-10 font-semibold">
+                        <Link href="/user/movies">Movies</Link>
+                        <Link href="/user/booking">Booking</Link>
+                        <Link href="/user/profile">Profile</Link>
+                    </div>
                 <div className="flex gap-10">
-                    <button
-                        onClick={() => {setOpenSheet(true); setForm('login')}}
-                        className={`font-bold ${scrolled ?  'text-white' : 'text-gray-300'}`}
-                    >
-                        Login
-                    </button>
-                    <Button
-                        onClick={() => {setOpenSheet(true); setForm('register')}}
-                        className={`rounded-full ${scrolled ? 'bg-white text-cyan-600' : 'bg-cyan-600'}
-                    `}>
-                        Buat Akun
-                    </Button>
+                    {user ?
+                        (
+                            <div className="flex gap-5 items-center text-white">
+                                <div className="flex items-center gap-1">
+                                    <h1 className=" font-bold uppercase">
+                                        {user?.name}
+                                    </h1>
+                                    <CircleUserRound />
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={() => {setOpenSheet(true); setForm('login')}}
+                                    className={`font-bold text-white`}
+                                >
+                                    Login
+                                </button>
+                                <Button
+                                    onClick={() => {setOpenSheet(true); setForm('register')}}
+                                    className='rounded-full bg-white text-cyan-600 font-semibold'>
+                                    Buat Akun
+                                </Button>
+                            </>
+                        )
+                    }
                 </div>
             </div>
 
@@ -124,13 +168,17 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
                     <CarouselItem key={movie.id}>
                         <Card className="p-0 rounded-none">
                             <CardContent className="p-0">
-                                <div className="w-full h-[500px] flex items-end py-16 px-32"
-                                    style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.2)), url(${movie.poster_url})`}}
-                                >
-                                    <div className="text-white uppercase flex flex-col gap-2">
+                                <div className="w-full h-[500px] bg-black flex justify-between items-center">
+                                    <div className="text-white uppercase flex flex-col gap-2 ml-26">
                                         <h2 className="text-3xl font-bold">{movie.name}</h2>
                                         <span>{movie.genre} - {formatDuration(Number(movie.duration))}</span>
-                                        <Button className="w-max rounded-lg">Pesan Sekarang</Button>
+                                        <Link href={`/user/movies/${movie.id}`}>
+                                            <Button className="w-max rounded-lg">Pesan Sekarang</Button>
+                                        </Link>
+                                    </div>
+                                    <div className="flex-none w-[50%] min-h-full bg-cover flex items-end py-16 px-32 bg-center rounded-l-full"
+                                        style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.2)), url(${movie.poster_url})`}}
+                                    >
                                     </div>
                                 </div>
                             </CardContent>

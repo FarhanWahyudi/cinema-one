@@ -53,7 +53,7 @@ export const deleteMovie = async (id: string) => {
 }
 
 export const getMovieById = async (id: string) => {
-    const { data, error } = await supabase.from('movies').select('*').eq('id', id)
+    const { data, error } = await supabase.from('movies').select('*, show:shows(*)').eq('id', id)
 
     if (error) {
         return {

@@ -2,6 +2,7 @@ import { formatTime } from '@/helpers/date-time-formats';
 import { IShow, ITheatre } from '@/interfaces'
 import dayjs from 'dayjs';
 import { Heading1 } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
 import React from 'react'
 
 interface TheatresAndShowsProps {
@@ -22,9 +23,10 @@ export default function TheatresAndShowsOfMovie({
     selectedShow,
     setSelectedShow,
 }: TheatresAndShowsProps) {
+  const router = useRouter()
+  const params = useParams()
   return (
     <div>
-      {theatresAndShows.length === 0 && <h1>Tidak ada penayangan film ini pada tanggal yang anda pilih.</h1>}
       <div className='flex flex-col gap-5 mt-5'>
         {theatresAndShows.map((theatreAndShow) => {
           const shows = theatreAndShow.shows
@@ -46,8 +48,7 @@ export default function TheatresAndShowsOfMovie({
                           : ''
                       }`}
                       onClick={() => {
-                        setSelectedTheatre(theatreAndShow.theatre.id)
-                        setSelectedShow(show.id)
+                        router.push(`/user/movies/${params.id}/select-seats?theatreId=${theatreAndShow.theatre.id}&showId=${show.id}`)
                       }}
                     >
                       {formatTime(show.time)}
