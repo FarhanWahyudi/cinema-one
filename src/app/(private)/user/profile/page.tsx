@@ -1,40 +1,43 @@
 "use client"
 
-import PageTitle from '@/components/ui/page-title'
-import { formatDate } from '@/helpers/date-time-formats'
 import { IUserStore, useUsersStore } from '@/store/users-store'
 import React from 'react'
+import ProfileLayout from '@/layout-provider/profile-layout'
 
 export default function UserProfilePage() {
     const { user } = useUsersStore() as IUserStore
-    if (!user) {
-        return <h1>User not found</h1>
-    }
 
     return (
-        <div>
-            <PageTitle title='User Profile' />
-            <div className='border border-gray-500 p-10 rounded-xl mt-10 flex justify-center'>
-                <div className='flex flex-col items-center w-max gap-10 '>
-                    <img src="https://t3.ftcdn.net/jpg/08/05/28/22/360_F_805282248_LHUxw7t2pnQ7x8lFEsS2IZgK8IGFXePS.jpg" alt="user" className='w-36 h-36 rounded-full' />
+        <ProfileLayout>
+            <div className='shadow border border-gray-100 bg-white rounded-xl p-5'>
+                <h1 className='text-gray-600 font-bold text-2xl'>My Profile</h1>
+                <hr className='border-gray-300 my-5' />
+                <div className='flex gap-10'>
+                    <img src="https://cinepolis.co.id/images/temp/pro_im.jpg" alt="user-avatar" className='rounded-lg' />
                     <div className='flex gap-20'>
-                        <div className='font-semibold flex flex-col gap-2'>
-                            <span>User ID</span>
+                        <div className='flex flex-col gap-10 text-gray-500'>
                             <span>Name</span>
-                            <span>Email</span>
-                            <span>Role</span>
-                            <span>Joined At</span>
+                            <span>Gender</span>
+                            <span>City</span>
+                            <span>Date of Birth</span>
                         </div>
-                        <div className='text-gray-600 font-semibold flex flex-col gap-2'>
-                            <span>{user.id}</span>
-                            <span>{user.name}</span>
-                            <span>{user.email}</span>
-                            <span>{user.role}</span>
-                            <span>{formatDate(user.created_at)}</span>
+                        <div className='flex flex-col gap-10 text-gray-500'>
+                            <span>{user?.name}</span>
+                            <span>{user?.gender || '-'}</span>
+                            <span>{user?.city || '-'}</span>
+                            <span>{user?.date_of_birth || '-'}</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div className='shadow border border-gray-100 bg-white rounded-xl p-5'>
+                <h1 className='text-gray-600 font-bold text-2xl'>Account</h1>
+                <hr className='border-gray-300 my-5' />
+                <div className='flex items-center gap-8 py-5 px-32'>
+                    <label className='text-gray-500 text-lg'>Email</label>
+                    <input type='email' disabled className='w-full border border-gray-400 rounded-lg p-3 text-gray-700' defaultValue={user?.email}/>
+                </div>
+            </div>
+        </ProfileLayout>
     )
 }

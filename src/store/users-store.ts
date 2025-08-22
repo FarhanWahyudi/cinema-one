@@ -10,5 +10,5 @@ export const useUsersStore = usersGlobalStore;
 
 export interface IUserStore {
     user: IUser | null;
-    setUser: (payload: IUser) => void;
+    setUser: (payload: IUser | null) => void;
 }

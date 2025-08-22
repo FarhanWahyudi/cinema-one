@@ -34,17 +34,17 @@ export default function Header() {
                     </div>
                 )}
                 <div className="flex gap-5 items-center text-white">
-                    <div className="flex items-center gap-2">
+                    <Link  href={user?.role === 'user' ? `/user/profile` : '/admin/dashboard'} className="flex items-center gap-2">
                         <div className="w-7 h-7 bg-blue-700 rounded-full flex items-center justify-center uppercase font-bold
                         ">{user?.name[0]}</div>
                         <h1 className="text-lg mb-1">
                             {user?.name}
                         </h1>
-                    </div>
+                    </Link>
                     {user?.role === 'admin' && (
                         <Menu
                             onClick={() => setOpenSidebar(true)}
-                            className="cursor-pointer"
+                            className="cursor-pointer mb-1"
                             size={20}
                         />
                     )}

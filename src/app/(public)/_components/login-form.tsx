@@ -24,6 +24,8 @@ import toast from "react-hot-toast";
 import { loginUser } from "@/actions/users";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { IUser } from "@/interfaces";
+import { IUserStore } from "@/store/users-store";
 
 const loginFormSchema: any = z.object({
     email: z.string().email(),
@@ -31,7 +33,15 @@ const loginFormSchema: any = z.object({
     role: z.string()
 })
 
-export default function LoginForm({ setForm }: {setForm: Dispatch<SetStateAction<'login' | 'register'>>}) {
+export default function LoginForm({
+    setForm,
+    setUser,
+    setOpenSheet
+}: {
+    setForm: Dispatch<SetStateAction<'login' | 'register'>>,
+    setUser: (payload: IUser | null) => void
+    setOpenSheet: Dispatch<SetStateAction<boolean>>
+}) {
     const [ loading, setLoading ] = useState(false)
     const router = useRouter();
     const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -54,6 +64,8 @@ export default function LoginForm({ setForm }: {setForm: Dispatch<SetStateAction
             Cookies.set("jwt_token", response.data!);
             Cookies.set("user_role", response.user.role);
             form.reset();
+            setUser(response.user)
+            setOpenSheet(false)
             router.push(`/`)
         } catch (error: any) {
             toast.error(error.message)
