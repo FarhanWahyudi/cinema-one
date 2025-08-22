@@ -78,10 +78,10 @@ export default function UserTheatresPage() {
         <hr className='border-gray-400 my-20'/>
         <div className='flex justify-between items-center'>
           <h2 className='text-4xl font-bold text-gray-700'>Now Showing</h2>
-          <div className='w-[50%] bg-white h-24 rounded-xl px-10 flex gap-3'>
+          <div className='w-[50%] bg-white h-20 rounded-xl px-10 flex gap-3'>
             {[...new Set(theatre?.show?.map(show => show.date))].map((date, idx) => (
               <div key={idx}
-              className='bg-cyan-600 h-full w-max text-lg text-white flex flex-col items-center justify-center px-5 cursor-pointer'
+              className='bg-cyan-600 h-full leading-6 w-max text-lg text-white flex flex-col items-center justify-center px-5 cursor-pointer'
               onClick={() => setDate(date)}>
                 {formatDate(date).split(" ").map((char, i) => {
                   if (i === 1) {

@@ -139,7 +139,7 @@ export default function SelectSeats() {
             <div className='flex flex-col gap-5'>
             <img src={movie?.poster_url} alt="" className='fixed top-0 left-0 w-full opacity-20 h-[70vh] object-cover [mask-image:linear-gradient(to_bottom,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%] pointer-events-none'/>
                 <div className='flex justify-between items-center'>
-                    <PageTitle title='Pilih Kursi' />
+                    <h2 className='text-4xl font-bold text-cyan-800'>Pilih Kursi</h2>
                     <div className='flex items-center gap-5'>
                         <Button className='bg-cyan-600' disabled={selectedSeats.length === 0 || fetchingClientSecret} onClick={getClientSecret}>Pesan Sekarang</Button>
                     </div>

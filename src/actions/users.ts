@@ -45,7 +45,7 @@ export const registerUser = async (payload: Partial<IUser>) => {
 
     return {
         success: true,
-        message: "user registered successfully"
+        message: "user registered successfully",
     }
 }
 

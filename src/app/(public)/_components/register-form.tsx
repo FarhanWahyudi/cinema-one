@@ -14,11 +14,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
 import { registerUser } from "@/actions/users";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 const registerFormSchema = z.object({
     name: z.string().min(1),
@@ -26,9 +24,12 @@ const registerFormSchema = z.object({
     password: z.string().min(6),
 })
 
-export default function RegisterForm({ setForm }: {setForm: Dispatch<SetStateAction<'login' | 'register'>>}) {
+export default function RegisterForm({
+    setForm,
+}: {
+    setForm: Dispatch<SetStateAction<'login' | 'register'>>,
+}) {
     const [ loading, setLoading ] = useState(false);
-    const router = useRouter();
     const form = useForm<z.infer<typeof registerFormSchema>>({
         resolver: zodResolver(registerFormSchema),
         defaultValues: {

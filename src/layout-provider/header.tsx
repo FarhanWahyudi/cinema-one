@@ -37,7 +37,7 @@ export default function Header() {
                     <Link  href={user?.role === 'user' ? `/user/profile` : '/admin/dashboard'} className="flex items-center gap-2">
                         <div className="w-7 h-7 bg-blue-700 rounded-full flex items-center justify-center uppercase font-bold
                         ">{user?.name[0]}</div>
-                        <h1 className="text-lg mb-1">
+                        <h1 className="text-lg mb-1 capitalize font-semibold">
                             {user?.name}
                         </h1>
                     </Link>

@@ -21,7 +21,7 @@ export default function UserProfilePage() {
                             <span>City</span>
                             <span>Date of Birth</span>
                         </div>
-                        <div className='flex flex-col gap-10 text-gray-500'>
+                        <div className='flex flex-col gap-10 text-gray-500 capitalize'>
                             <span>{user?.name}</span>
                             <span>{user?.gender || '-'}</span>
                             <span>{user?.city || '-'}</span>

@@ -23,20 +23,19 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { IMovie, ITheatre } from "@/interfaces"
-import { getActiveMovies } from "@/actions/movies"
+import { getActiveMovies, getAllMovies } from "@/actions/movies"
 import { formatDuration } from "@/helpers/date-time-formats"
 import { Input } from "@/components/ui/input"
 import { FormEvent, useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import MovieTitle from "../(private)/user/movies/_components/movie-title"
 import { getAllTheatres } from "@/actions/theatres"
 import Link from "next/link";
+import Spinner from "@/components/functional/spinner";
 
-interface MovieTitleProps {
-    searchParams: Promise<{ search?: string}>
-}
-
-export default function Homepage({ searchParams }: MovieTitleProps) {
+export default function Homepage() {
+    const searchParams = useSearchParams(); // ✅ ambil langsung dari hook
+    const formParam = searchParams.get("form");
     const [openSheet, setOpenSheet] = useState(false);
     const [form, setForm] = useState<'login' | 'register'>('login')
     const [movies, setMovies] = useState<IMovie[]>([])
@@ -48,7 +47,7 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
     const { user } = useUsersStore() as IUserStore;
     const { setUser } = useUsersStore() as IUserStore;
 
-    const fetchData = async () => {
+    const fetchDataUser = async () => {
         try {
             const response = await getLoggedInUser();
             if (!response.success) {
@@ -62,8 +61,19 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
     }
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchDataUser();
+    }, [])
+
+    useEffect(() => {
+        if (formParam === 'login') {
+            setForm('login')
+            setOpenSheet(true)
+        }
+        if (formParam === 'register') {
+            setForm('register')
+            setOpenSheet(true)
+        }
+    }, [formParam]);
 
     const handleSearch = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -73,10 +83,8 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
     const fetchMovie = async () => {
         try {
             setLoading(true)
-            const searchParamsObj = await searchParams
-    
             const [movieResponse, theatresResponse]: any[] = await Promise.all([
-                getActiveMovies({search: searchParamsObj.search || ''}),
+                getAllMovies(),
                 getAllTheatres()
             ])
 
@@ -140,7 +148,7 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
                                 <Link href={`user/profile`} className="flex items-center gap-2">
                                     <div className="w-7 h-7 bg-blue-700 rounded-full flex items-center justify-center uppercase font-bold
                                     ">{user.name[0]}</div>
-                                    <h1 className="text-lg mb-1">
+                                    <h1 className="text-lg mb-1 capitalize font-semibold">
                                         {user?.name}
                                     </h1>
                                 </Link>
@@ -149,7 +157,7 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
                             <>
                                 <button
                                     onClick={() => {setOpenSheet(true); setForm('login')}}
-                                    className={`font-bold text-white`}
+                                    className={`font-bold text-white cursor-pointer`}
                                 >
                                     Login
                                 </button>
@@ -164,34 +172,41 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
                 </div>
             </div>
 
-            <Carousel className="w-screen">
-                <CarouselContent>
-                    {/* {loading && <Spinner />} */}
-                    {movies.map((movie) => (
-                    <CarouselItem key={movie.id}>
-                        <Card className="p-0 rounded-none">
-                            <CardContent className="p-0">
-                                <div className="w-full h-[500px] bg-black flex justify-between items-center">
-                                    <div className="text-white uppercase flex flex-col gap-2 ml-26">
-                                        <h2 className="text-3xl font-bold">{movie.name}</h2>
-                                        <span>{movie.genre} - {formatDuration(Number(movie.duration))}</span>
-                                        <Link href={`/user/movies/${movie.id}`}>
-                                            <Button className="w-max rounded-lg">Pesan Sekarang</Button>
-                                        </Link>
+            {loading ? (
+                <div className="w-full h-[428px]">
+                    <Spinner />
+                </div>
+            ) : (
+                <Carousel className="w-screen">
+                    <CarouselContent>
+                        {/* {loading && <Spinner />} */}
+                        {movies.map((movie) => (
+                        <CarouselItem key={movie.id}>
+                            <Card className="p-0 rounded-none">
+                                <CardContent className="p-0">
+                                    <div className="w-full h-[500px] bg-black flex justify-between items-center">
+                                        <div className="text-white uppercase flex flex-col gap-2 ml-26">
+                                            <h2 className="text-3xl font-bold">{movie.name}</h2>
+                                            <span>{movie.genre} - {formatDuration(Number(movie.duration))}</span>
+                                            <Link href={`/user/movies/${movie.id}`}>
+                                                <Button className="w-max rounded-lg">Pesan Sekarang</Button>
+                                            </Link>
+                                        </div>
+                                        <div className="flex-none w-[50%] min-h-full bg-cover flex items-end py-16 px-32 bg-center rounded-l-full"
+                                            style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.2)), url(${movie.poster_url})`}}
+                                        >
+                                        </div>
                                     </div>
-                                    <div className="flex-none w-[50%] min-h-full bg-cover flex items-end py-16 px-32 bg-center rounded-l-full"
-                                        style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.2)), url(${movie.poster_url})`}}
-                                    >
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </CarouselItem>
-                    ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-5 top-1/2 -translate-y-1/2"  />
-                <CarouselNext className="right-5 top-1/2 -translate-y-1/2" />
-            </Carousel>
+                                </CardContent>
+                            </Card>
+                        </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="left-5 top-1/2 -translate-y-1/2"  />
+                    <CarouselNext className="right-5 top-1/2 -translate-y-1/2" />
+                </Carousel>
+
+            )}
 
             <form onSubmit={handleSearch} className='flex justify-center -mt-8' >
                 <div className="shadow-lg rounded-xl flex items-center w-[50vw] h-16 bg-white p-2 z-50">

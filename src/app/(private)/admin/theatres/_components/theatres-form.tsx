@@ -26,6 +26,7 @@ import {
 import { addTheatre, updateTheatre } from '@/actions/theatres';
 import toast from 'react-hot-toast';
 import { Input } from '@/components/ui/input';
+import { uploadFileAndGetUrl } from '@/helpers/file-uploads';
 
 interface ITheatreFormProps {
     openTheatreForm: boolean
@@ -43,24 +44,35 @@ const thearesFormSchema: any = z.object({
 
 export default function TheatreForm({ openTheatreForm, setOpenTheatreForm, reloadData, selectedTheatre, formType }: ITheatreFormProps) {
     const [ loading, setLoading ] = useState(false)
+    const [ selectedImageFile, setSelectedImageFile ] = useState<File | null>(null)
     const form = useForm<z.infer<typeof thearesFormSchema>>({
     resolver: zodResolver(thearesFormSchema),
     defaultValues: {
         name: selectedTheatre?.name || "",
         address: selectedTheatre?.address || "",
         capacity: selectedTheatre?.capacity || 0,
+        theatre_img: selectedTheatre?.theatre_img || "",
     }
     });
 
     async function onSubmit(values: z.infer<typeof thearesFormSchema>) {
         try {
             setLoading(true)
+
+            const payload = { ...values }
+                if (selectedImageFile) {
+                const uploadResponse = await uploadFileAndGetUrl(selectedImageFile)
+                if (!uploadResponse.success) {
+                    throw new Error(uploadResponse.message)
+                }
+                payload.theatre_img = uploadResponse.data
+                }
             let response = null
 
             if (formType === 'add') {
-                response = await addTheatre(values);
+                response = await addTheatre(payload);
             } else if (formType === 'edit') {
-                response = await updateTheatre(selectedTheatre?.id || '', values)
+                response = await updateTheatre(selectedTheatre?.id || '', payload)
             }
 
             if (!response?.success) {
@@ -135,6 +147,33 @@ export default function TheatreForm({ openTheatreForm, setOpenTheatreForm, reloa
                             </FormItem>
                         )}
                     />
+                    <div className="flex flex-col gap-5">
+                        {(selectedImageFile || form.getValues().theatre_img ) && (
+                        <div className="mt-3">
+                            <img
+                            src={selectedImageFile
+                                ? URL.createObjectURL(selectedImageFile!)
+                                : form.getValues().theatre_img}
+                            alt="Selected poster"
+                            className="w-32 rounded-lg"
+                            />
+                        </div>
+                        )}
+                        <div className="w-max">
+                        <label htmlFor="file selection">Pilih Poster</label>
+                        <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                            const file = e.target.files?.[0]
+                            if (file) {
+                                setSelectedImageFile(file);
+                                form.setValue('theatre_img', URL.createObjectURL(file));
+                            }
+                            }}
+                        />
+                        </div>
+                    </div>
                     <div className="flex justify-end gap-3 mt-5">
                         <Button type="button" variant={"outline"} onClick={() => {setOpenTheatreForm(false); form.reset()}}>Batal</Button>
                         <Button type="submit" disabled={loading}>
