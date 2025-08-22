@@ -3,6 +3,7 @@ import { CircleUserRound, MapPin, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import SidebarMenuItems from "./sidebar-menuitems";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Header() {
     const [openSheet, setOpenSheet] = useState(false);
@@ -13,11 +14,13 @@ export default function Header() {
     return (
         <div className={`px-20 py-5 flex justify-between items-center fixed top-0 w-full z-100 transition-all duration-300 bg-cyan-600`}>
                 <div className="flex items-center gap-5">
-                    <img
-                        src={"https://cinepolis.co.id/images/cinepolis-logo.png"}
-                        alt="logo"
-                        className="w-24"
-                    />
+                    <Link href={'/'}>
+                        <img
+                            src={"https://cinepolis.co.id/images/cinepolis-logo.png"}
+                            alt="logo"
+                            className="w-24"
+                        />
+                    </Link>
                     <div className="flex items-center text-white px-2 py-1 gap-1">
                         <MapPin className="w-3.5" />
                         <h2 className="text-sm font-semibold">MALANG</h2>

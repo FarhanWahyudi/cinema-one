@@ -134,3 +134,45 @@ export const getShowByMovieId = async (movieId: string, date: string) => {
         }
     }
 }
+
+export const getShowByTheatreId = async (theaterId: string, date: string) => {
+    try {
+        const { data, error } = await supabase.from('shows').select('*, movie:movies(*)').eq('theatre_id', theaterId).eq('date', date)
+        if (error) {
+            return {
+                success: false,
+                message: error.message
+            }
+        }
+
+        const groupedData: any = []
+        const movieIdsObject: any = {}
+
+        data.forEach((show) => {
+            if (movieIdsObject[show.movie.id]) {
+                const addedObject = groupedData.find((group: any) => {
+                    return group.movie.id === show.movie.id
+                })
+                addedObject.shows.push(show)
+            } else {
+                groupedData.push({
+                    movie: show.movie,
+                    shows: [show]
+                })
+                movieIdsObject[show.movie.id] = true
+            }
+        })
+
+        return {
+            success: true,
+            message: 'shows fetched successfully',
+            data: groupedData
+        }
+
+    } catch (error) {
+        return {
+            success: false,
+            message: 'failed to fetch shows for the movie'
+        }
+    }
+}

@@ -52,7 +52,7 @@ export const deleteTheatre = async (id: string) => {
 }
 
 export const getTheatreById = async (id: string) => {
-    const { data, error } = await supabase.from('theatres').select('*').eq('id', id)
+    const { data, error } = await supabase.from('theatres').select('*, show:shows(*)').eq('id', id)
 
     if (error) {
         return {

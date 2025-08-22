@@ -113,10 +113,6 @@ export default function MovieTheatreAndShowPage() {
           ? <Spinner />
           : <TheatresAndShowsOfMovie
               theatresAndShows={theatresAndShows}
-              selectedTheatre={selectedTheatre}
-              setSelectedTheatre={setSelectedTheatre}
-              selectedShow={selectedShow}
-              setSelectedShow={setSelectedShow}
             />
         }
       </div>

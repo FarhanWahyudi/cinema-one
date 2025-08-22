@@ -10,18 +10,10 @@ interface TheatresAndShowsProps {
         theatre: ITheatre;
         shows: IShow[]
     }[];
-    selectedTheatre: string | null
-    setSelectedTheatre: (theatreId: string | null) => void
-    selectedShow: string | null
-    setSelectedShow: (showId: string | null) => void
 }
 
 export default function TheatresAndShowsOfMovie({
     theatresAndShows,
-    selectedTheatre,
-    setSelectedTheatre,
-    selectedShow,
-    setSelectedShow,
 }: TheatresAndShowsProps) {
   const router = useRouter()
   const params = useParams()
@@ -38,15 +30,10 @@ export default function TheatresAndShowsOfMovie({
               <h1 className='text-xl font-bold text-primary uppercase'>{theatreAndShow.theatre.name} - {theatreAndShow.theatre.address}</h1>
               <div className='flex gap-2'>
                 {sortedShow.map((show) => {
-                  const isSelected = selectedShow === show.id;
                   return (
                     <div
                       key={show.id}
-                      className={`px-3 py-1 rounded-lg text-sm cursor-pointer bg-white border ${
-                        isSelected
-                          ? 'border-black'
-                          : ''
-                      }`}
+                      className={`px-3 py-1 rounded-lg text-sm cursor-pointer bg-white border`}
                       onClick={() => {
                         router.push(`/user/movies/${params.id}/select-seats?theatreId=${theatreAndShow.theatre.id}&showId=${show.id}`)
                       }}
