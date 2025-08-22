@@ -22,34 +22,11 @@ export default function SidebarMenuItems({
     openSidebar: boolean,
     setOpenSidebar: Dispatch<SetStateAction<boolean>>;
 }) {
-    const { user } = useUsersStore() as IUserStore;
     const pathname = usePathname();
     const router = useRouter();
 
     const iconSize = 16
 
-    const userMenuItems: any[] = [
-        {
-            name: 'Dashboard',
-            path: '/user/dashboard',
-            icon: <LayoutDashboard size={iconSize} />
-        },
-        {
-            name: 'Film',
-            path: '/user/movies',
-            icon: <Clapperboard size={iconSize} />
-        },
-        {
-            name: 'Booking',
-            path: '/user/booking',
-            icon: <ListCheck size={iconSize} />
-        },
-        {
-            name: 'Profil',
-            path: '/user/profile',
-            icon: <UserRoundPen size={iconSize} />
-        },
-    ];
     const adminMenuItems: any[] = [
         {
             name: 'Dashboard',
@@ -82,8 +59,6 @@ export default function SidebarMenuItems({
             icon: <UserCheck size={iconSize} />
         },
     ];
-
-    const menuItems: any[] = user?.role === 'admin' ? adminMenuItems : userMenuItems
     return (
         <Sheet
                 open={openSidebar}
@@ -95,7 +70,7 @@ export default function SidebarMenuItems({
                         
                         <div className="flex flex-col justify-between h-full px-7 mt-10">
                             <div className="flex flex-col gap-5">
-                                {menuItems.map((item) => (
+                                {adminMenuItems.map((item) => (
                                     <div key={item.name} className={`flex p-5 items-center gap-2 cursor-pointer rounded-2xl from-cyan-400 to-cyan-200 hover:bg-cyan-200 transition-all duration-300 ${
                                         pathname.startsWith(item.path)
                                             ? 'bg-gradient-to-l border-primary text-primary'

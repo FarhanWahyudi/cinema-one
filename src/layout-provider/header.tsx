@@ -1,6 +1,6 @@
 import { IUserStore, useUsersStore } from "@/store/users-store";
 import { CircleUserRound, MapPin, Menu } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SidebarMenuItems from "./sidebar-menuitems";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -12,7 +12,7 @@ export default function Header() {
     const [ openSidebar, setOpenSidebar ] = useState<boolean>(false);
 
     return (
-        <div className={`px-20 py-5 flex justify-between items-center fixed top-0 w-full z-100 transition-all duration-300 bg-cyan-600`}>
+        <div className={`px-20 py-5 flex justify-between items-center fixed top-0 w-full z-100 bg-gradient-to-l from-cyan-600 to-blue-500`}>
                 <div className="flex items-center gap-5">
                     <Link href={'/'}>
                         <img
@@ -26,40 +26,28 @@ export default function Header() {
                         <h2 className="text-sm font-semibold">MALANG</h2>
                     </div>
                 </div>
-                <div className="flex gap-10">
-                    {user ?
-                        (
-                            <div className="flex gap-5 items-center text-white">
-                                <div className="flex items-center gap-1">
-                                    <h1 className=" font-bold uppercase">
-                                        {user?.name}
-                                    </h1>
-                                    <CircleUserRound />
-                                </div>
-                                {user.role === 'admin' && (
-                                    <Menu
-                                        onClick={() => setOpenSidebar(true)}
-                                        className="cursor-pointer"
-                                        size={20}
-                                    />
-                                )}
-                            </div>
-                        ) : (
-                            <>
-                                <button
-                                    onClick={() => {setOpenSheet(true); setForm('login')}}
-                                    className={`font-bold text-white`}
-                                >
-                                    Login
-                                </button>
-                                <Button
-                                    onClick={() => {setOpenSheet(true); setForm('register')}}
-                                    className='rounded-full bg-white text-cyan-600 font-semibold'>
-                                    Buat Akun
-                                </Button>
-                            </>
-                        )
-                    }
+                {user?.role === 'user' && (
+                    <div className="text-white space-x-10 font-semibold">
+                        <Link href="/user/movies">Movies</Link>
+                        <Link href="/user/booking">Booking</Link>
+                        <Link href="/user/profile">Profile</Link>
+                    </div>
+                )}
+                <div className="flex gap-5 items-center text-white">
+                    <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 bg-blue-700 rounded-full flex items-center justify-center uppercase font-bold
+                        ">{user?.name[0]}</div>
+                        <h1 className="text-lg mb-1">
+                            {user?.name}
+                        </h1>
+                    </div>
+                    {user?.role === 'admin' && (
+                        <Menu
+                            onClick={() => setOpenSidebar(true)}
+                            className="cursor-pointer"
+                            size={20}
+                        />
+                    )}
                 </div>
                 {openSidebar && <SidebarMenuItems {...{
                     openSidebar,

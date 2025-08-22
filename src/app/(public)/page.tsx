@@ -110,9 +110,14 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
 
     return (
         <div className="overflow-x-hidden bg-gradient-to-r from-cyan-50 to-white">
-            <div className={`px-20 py-5 flex justify-between items-center fixed top-0 w-full z-100 transition-all duration-300
-                ${scrolled ? 'bg-cyan-600' : 'bg-transparent'}
-            `}>
+            <div className={`px-20 py-5 flex justify-between items-center fixed top-0 w-full z-100 `}>
+                <div
+                    className={`absolute inset-0 transition-all duration-500 -z-10
+                        ${scrolled ? 'opacity-100 bg-gradient-to-l from-cyan-600 to-blue-500' : 'opacity-0 bg-transparent'}
+                    `}
+                >
+
+                </div>
                     <div className="flex items-center gap-5">
                         <Link href={'/'}>
                             <img
@@ -135,11 +140,12 @@ export default function Homepage({ searchParams }: MovieTitleProps) {
                     {user ?
                         (
                             <div className="flex gap-5 items-center text-white">
-                                <div className="flex items-center gap-1">
-                                    <h1 className=" font-bold uppercase">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-7 h-7 bg-blue-700 rounded-full flex items-center justify-center uppercase font-bold
+                                    ">{user.name[0]}</div>
+                                    <h1 className="text-lg mb-1">
                                         {user?.name}
                                     </h1>
-                                    <CircleUserRound />
                                 </div>
                             </div>
                         ) : (
