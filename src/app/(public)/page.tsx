@@ -180,7 +180,7 @@ export default function Homepage() {
                 <Carousel className="w-screen">
                     <CarouselContent>
                         {/* {loading && <Spinner />} */}
-                        {movies.map((movie) => (
+                        {movies.slice(0, 5).map((movie) => (
                         <CarouselItem key={movie.id}>
                             <Card className="p-0 rounded-none">
                                 <CardContent className="p-0">
@@ -258,7 +258,7 @@ export default function Homepage() {
                         <Card className="p-0 rounded-none">
                             <CardContent className="p-0">
                                 <div className="w-full h-[500px] flex items-center py-16 px-32 bg-cover bg-center"
-                                    style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.2)), url(${theatre.theatre_img})`}}
+                                    style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${theatre.theatre_img})`}}
                                 >
                                     <div className="text-white uppercase flex flex-col gap-2">
                                         <h2 className="text-3xl font-bold">{theatre.name}</h2>

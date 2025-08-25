@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cinego",
+  title: "Cinepolis",
   description: "An online movie ticket booking platform",
 };
 

@@ -143,3 +143,19 @@ export const getAllUsers = async () => {
         data: data
     }
 }
+
+export const updateUser = async (id: string, user: Partial<IUser>) => {
+    const { data, error } = await supabase.from('user_profiles').update(user).eq('id', id)
+
+    if (error) {
+        return {
+            success: false,
+            message: error.message
+        }
+    }
+
+    return {
+        success: true,
+        message: "user updated successfully"
+    }
+}

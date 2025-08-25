@@ -28,6 +28,8 @@ export default function MovieTheatreAndShowPage() {
     theatre: ITheatre,
     shows: IShow[]
   }[]>([])
+  const today = new Date(new Date().setHours(0, 0, 0, 0));
+  const upcomingShows = movie?.show?.filter(show => new Date(show.date) >= today) || [];
 
   const fetchMovie = async () => {
     setLoading(true)
@@ -95,7 +97,13 @@ export default function MovieTheatreAndShowPage() {
         </div>
         <div className='w-full -mt-12 flex justify-center'>
           <div className='w-[50%] bg-white h-24 rounded-xl px-10 flex gap-3'>
-          {[...new Set(movie?.show?.map(show => show.date))].map((date, idx) => (
+          {upcomingShows.length === 0 && (
+            <div className='w-full flex justify-center items-center'>
+              <h2 className='text-lg font-semibold text-center'>Kami mohon maaf<br/>Film ini tidak ada penayangan untuk satu miggu ke depan</h2>
+            </div>
+          )}
+          {[...new Set(upcomingShows.map(show => show.date))]
+          .map((date, idx) => (
             <div key={idx}
             className='bg-cyan-600 h-full w-max text-lg text-white flex flex-col items-center justify-center px-5 cursor-pointer'
             onClick={() => setDate(date)}>
