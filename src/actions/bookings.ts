@@ -22,7 +22,7 @@ export const createBooking = async (booking: Partial<IBooking>) => {
 }
 
 export const getAllBookings = async () => {
-    const { data, error } = await supabase.from('bookings').select('*, theatre:theatres(*), movie:movies(*), show:shows(*)')
+    const { data, error } = await supabase.from('bookings').select('*, theatre:theatres(*), movie:movies(*), show:shows(*), user:user_profiles(*)')
 
     if (error) {
         return {

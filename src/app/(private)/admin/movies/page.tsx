@@ -16,10 +16,10 @@ import {
 import { IMovie } from '@/interfaces'
 import toast from 'react-hot-toast'
 import { deleteMovie, getAllMovies } from '@/actions/movies'
-import { Edit2, Trash2 } from 'lucide-react'
+import { Calendar, Clock, Edit2, Trash2 } from 'lucide-react'
 import Spinner from '@/components/functional/spinner'
 import { useRouter } from 'next/navigation'
-import { formatDate } from '@/helpers/date-time-formats'
+import { formatDate, formatDuration } from '@/helpers/date-time-formats'
 import NoDataMessage from '@/components/functional/no-data-message'
 
 
@@ -107,8 +107,18 @@ export default function AdminMoviesPage() {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell>{formatDate(movie.release_date)}</TableCell>
-                  <TableCell>{movie.duration}m</TableCell>
+                  <TableCell>
+                    <div className='flex items-center gap-1 text-gray-600'>
+                      <Calendar size={15}/>
+                      {formatDate(movie.release_date)}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className='flex items-center gap-1 text-gray-600'>
+                      <Clock size={15}/>
+                      {formatDuration(Number(movie.duration))}
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <div className='flex gap-2 items-center'>
                       <Button onClick={() => router.push(`/admin/movies/edit/${movie.id}`)} variant={"secondary"} size={'icon'}>

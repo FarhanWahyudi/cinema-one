@@ -26,7 +26,7 @@ export default function TheatresAndShowsOfMovie({
             return Number(a.time.split(':')[0]) - Number(b.time.split(':')[0])
           })
           return (
-            <div key={theatreAndShow.theatre.id} className='flex flex-col gap-5 bg-gradient-to-l from-white to-cyan-50 rounded-lg py-10 px-12 z-10'>
+            <div key={theatreAndShow.theatre.id} className='flex flex-col gap-5 bg-white shadow-lg shadow-gray-200 border border-gray-200 rounded-xl py-10 px-12 z-10'>
               <h1 className='text-xl font-bold text-primary uppercase'>{theatreAndShow.theatre.name} - {theatreAndShow.theatre.address}</h1>
               <div className='flex gap-2'>
                 {sortedShow.map((show) => {

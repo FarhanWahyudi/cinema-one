@@ -26,9 +26,8 @@ export default function UserProfilePage() {
                     </span>
                 </div>
                 <hr className='border-gray-300 my-5' />
-                <div className='flex gap-10'>
                     {openEdit && (
-                        <>
+                        <div className='flex items-start gap-10'>
                             <img src="https://cinepolis.co.id/images/temp/pro_im.jpg" alt="user-avatar" className='rounded-lg' />
                             <div className='flex gap-20 w-full'>
                                 <div className='flex flex-col gap-10 text-gray-500'>
@@ -41,10 +40,10 @@ export default function UserProfilePage() {
                                     <ProfileForm initialValues={user} setOpenEdit={setOpenEdit} setUser={setUser}/>
                                 </div>
                             </div>
-                        </>
+                        </div>
                     )}
                     {!openEdit && (
-                        <>
+                        <div className='flex items-start gap-10'>
                             <img src="https://cinepolis.co.id/images/temp/pro_im.jpg" alt="user-avatar" className='rounded-lg' />
                             <div className='flex gap-20'>
                                 <div className='flex flex-col gap-10 text-gray-500'>
@@ -60,9 +59,8 @@ export default function UserProfilePage() {
                                     <span>{formatDate(user?.date_of_birth!) || '-'}</span>
                                 </div>
                             </div>
-                        </>
+                        </div>
                     )}
-                </div>
             </div>
             <div className='shadow border border-gray-100 bg-white rounded-xl p-5'>
                 <h1 className='text-gray-600 font-bold text-2xl'>Account</h1>

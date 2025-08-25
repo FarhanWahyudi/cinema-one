@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Edit2, Trash2 } from 'lucide-react'
+import { Building2, Calendar, Clock, Edit2, MapPin, Trash2 } from 'lucide-react'
 import { formatDate, formatTime } from '@/helpers/date-time-formats'
 import NoDataMessage from '@/components/functional/no-data-message'
 
@@ -65,8 +65,7 @@ export default function AdminShowsPage() {
   const columns = [
     'Film',
     'Teater',
-    'Tangaal',
-    'Jam',
+    'Waktu Penayangan',
     'Harga Tiket',
     'Kursi Tersedia',
     'Actions'
@@ -109,11 +108,37 @@ export default function AdminShowsPage() {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className='uppercase'>{show.theatre.name}</TableCell>
-                  <TableCell>{formatDate(show.date)}</TableCell>
-                  <TableCell>{formatTime(show.time)}</TableCell>
-                  <TableCell>Rp {show.ticket_price.toFixed(3)}</TableCell>
-                  <TableCell>{show.available_seats_count}</TableCell>
+                  <TableCell>
+                    <div className='flex flex-col text-gray-600'>
+                      <div className='flex items-center gap-1'>
+                        <Building2 size={15}/>
+                        <span>{show.theatre.name}</span>
+                      </div>
+                      <div className='flex items-center gap-1 capitalize'>
+                        <MapPin size={15}/>
+                        <span>{show.theatre.address}</span>
+                      </div>
+                    </div>
+                    
+                  </TableCell>
+                  <TableCell>
+                    <div className='flex flex-col text-gray-600'>
+                      <span className='flex items-center gap-1'>
+                        <Calendar size={15}/>
+                        {formatDate(show.date)}
+                      </span>
+                      <span className='flex items-center gap-1'>
+                        <Clock size={15}/>
+                        {formatTime(show.time)}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className='text-gray-600'>Rp {show.ticket_price.toFixed(3)}</TableCell>
+                  <TableCell>
+                    <div className='w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center'>
+                      {show.available_seats_count}
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <div className='flex gap-2 items-center'>
                       <Button onClick={() => router.push(`/admin/shows/edit/${show.id}`)} variant={"secondary"} size={'icon'}>

@@ -33,6 +33,8 @@ import NoDataMessage from '@/components/functional/no-data-message';
 import { Button } from '@/components/ui/button';
 import PrivateLayout from '@/layout-provider/private-layout';
 import ProfileLayout from '@/layout-provider/profile-layout';
+import { Calendar, Clock } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 export default function UserBookingsPage() {
   const [bookings, setBookins] = useState<IBooking[]>([])
@@ -88,8 +90,7 @@ export default function UserBookingsPage() {
   }, [user])
 
   const columns = [
-      'Teater',
-      'Film',
+      'Film dan Teater',
       'Penayangan',
       'Kursi',
       'Jumlah',
@@ -122,12 +123,40 @@ export default function UserBookingsPage() {
                 {bookings.map((booking) => (
                   <TableRow key={booking.id}>
                     
-                    <TableCell className='uppercase'>{booking.theatre?.name}</TableCell>
-                    <TableCell className='uppercase'>{booking.movie?.name}</TableCell>
-                    <TableCell>{formatDate(booking.show!.date)} - {formatTime(booking.show!.time)}</TableCell>
-                    <TableCell>{booking.seat_number.join(', ')}</TableCell>
+                    <TableCell className='flex items-center gap-2 w-max'>
+                      <img src={booking.movie?.poster_url} alt={booking.movie?.name} className='w-20'/>
+                      <div className='flex flex-col suppercase'>
+                        <span className='font-semibold'>{booking.movie?.name}</span>
+                        <span className='text-gray-600'>{booking.theatre?.name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className='flex flex-col text-gray-600'>
+                        <span className='flex items-center gap-1'>
+                          <Calendar size={15}/>
+                          {formatDate(booking.show!.date)}
+                        </span>
+                        <span className='flex items-center gap-1'>
+                          <Clock size={15}/>
+                          {formatTime(booking.show!.time)}
+                        </span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className='flex gap-2 items-center'>
+                        {booking.seat_number.map((seat) => (
+                          <div key={seat} className='w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center'>{seat}</div>
+                        ))}
+                      </div>
+                    </TableCell>
                     <TableCell>Rp {booking.total_amount.toFixed(3)}</TableCell>
-                    <TableCell>{booking.status.toUpperCase()}</TableCell>
+                    <TableCell>
+                      <Badge className={`
+                        ${booking.status === 'booked' ? 'bg-yellow-400' : 'bg-red-400'}  
+                      `}>
+                        {booking.status.toUpperCase()}
+                      </Badge>
+                    </TableCell>
                     <TableCell className='py-3'>
                       <div className='flex items-center gap-5'>
                           <Button className='text-sm bg-red-500'

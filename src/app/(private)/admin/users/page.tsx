@@ -6,6 +6,7 @@ import PageTitle from '@/components/ui/page-title'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { formatDate } from '@/helpers/date-time-formats'
 import { IUser } from '@/interfaces'
+import { Calendar, Mail } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -33,8 +34,7 @@ export default function AdminUsersPage() {
     }, [])
 
     const columns = [
-        'User ID',
-        'Nama',
+        'Nama', 
         'Email',
         'Role',
         'Bergabung Pada'
@@ -63,16 +63,32 @@ export default function AdminUsersPage() {
                     <TableBody>
                         {users.map((user: IUser) => (
                             <TableRow key={user.id}>
-                                <TableCell className='py-5'>{user.id}</TableCell>
-                                <TableCell>{user.name}</TableCell>
-                                <TableCell>{user.email}</TableCell>
+                                <TableCell className='py-3'>
+                                    <div className='flex items-center gap-2'>
+                                        <div className="w-7 h-7 bg-blue-700 text-white rounded-full flex items-center justify-center uppercase font-bold
+                                            ">{user.name[0]}
+                                        </div>
+                                        <span className='mb-1'>{user.name}</span>
+                                    </div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className='flex items-center gap-1 text-gray-600'>
+                                        <Mail size={15} />
+                                        <span className='mb-1'>{user.email}</span>
+                                    </div>
+                                </TableCell>
                                 <TableCell>
                                     <select defaultValue={user.role} className='p-1 border border-gray-400 rounded-lg'>
                                         <option value="user">User</option>
                                         <option value="admin">Admin</option>
                                     </select>
                                 </TableCell>
-                                <TableCell>{formatDate(user.created_at)}</TableCell>
+                                <TableCell>
+                                    <div className='flex items-center gap-1 text-gray-600'>
+                                        <Calendar size={15} />
+                                        <span className='mb-1'>{formatDate(user.created_at)}</span>
+                                    </div>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

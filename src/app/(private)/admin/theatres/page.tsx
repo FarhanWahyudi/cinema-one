@@ -48,8 +48,7 @@ export default function AdminThearesPage() {
     }, [])
 
     const columns = [
-        'Nama',
-        'Alamat',
+        'Teater dan Alamat',
         'Kapasitas',
         'Actions'
     ]
@@ -99,9 +98,20 @@ export default function AdminThearesPage() {
                     <TableBody>
                     {theatres.map((theatre) => (
                         <TableRow key={theatre.id}>
-                            <TableCell className='uppercase'>{theatre.name}</TableCell>
-                            <TableCell className='capitalize'>{theatre.address}</TableCell>
-                            <TableCell>{theatre.capacity}</TableCell>
+                            <TableCell className='py-4'>
+                                <div className='flex items-center gap-2'>
+                                    <img src={theatre.theatre_img} alt={theatre.name} className='w-32 rounded-lg' />
+                                    <div className='flex flex-col'>
+                                        <span className='font-bold'>{theatre.name}</span>
+                                        <span className='text-gray-600 capitalize'>{theatre.address}</span>
+                                    </div>
+                                </div>
+                            </TableCell>
+                            <TableCell>
+                                <div className='w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center'>
+                                    {theatre.capacity}
+                                </div>
+                            </TableCell>
                             <TableCell  className='py-5'>
                                 <div className='flex gap-2 items-center'>
                                 <Button onClick={() => {

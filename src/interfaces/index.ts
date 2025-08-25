@@ -71,8 +71,8 @@ export interface IBooking {
     created_at: string,
     updated_at: string,
 
-    user?: IUser
-    show?: IShow
+    user?: IUser,
+    show?: IShow,
     movie?: IMovie,
     theatre?: ITheatre
 
