@@ -122,10 +122,10 @@ export default function UserBookingsPage() {
                   </TableCell>
                   <TableCell className='text-gray-600'>Rp {booking.total_amount.toFixed(3)}</TableCell>
                   <TableCell>
-                    <Badge className={`
+                    <Badge className={`capitalize
                       ${booking.status === 'booked' ? 'bg-yellow-400' : 'bg-red-400'}  
                     `}>
-                      {booking.status.toUpperCase()}
+                      {booking.status}
                     </Badge>
                   </TableCell>
                   <TableCell>

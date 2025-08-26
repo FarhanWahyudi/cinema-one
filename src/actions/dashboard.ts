@@ -53,7 +53,7 @@ export const getAdminDashboardData = async () => {
             supabase.from('movies').select('id'),
             supabase.from('theatres').select('id'),
             supabase.from('shows').select('id'),
-            supabase.from('bookings').select('*'),
+            supabase.from('bookings').select('*, movie:movies(*), user:user_profiles(*), theatre:theatres(*)'),
             supabase.from('user_profiles').select('id'),
         ])
 
@@ -81,6 +81,7 @@ export const getAdminDashboardData = async () => {
             totalShows: showsResponse.data?.length || 0,
             totalBookings: bookingsResponse.data?.length || 0,
             totalUsers: usersResponse.data?.length || 0,
+            newBooking: bookingsResponse.data
         }
 
         let totalRevenue = 0
